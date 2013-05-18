@@ -1,0 +1,237 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+  , fs = require('fs')
+  , path = require('path')
+  , os = require('os')
+  , version = JSON.parse( fs.readFileSync( __dirname+'/../package.json' ) ).version
+
+program.version(version);
+
+var eol = 'win32' == os.platform() ? '\r\n' : '\n'
+
+var app_js = [
+"var konter = require('konter')",
+"",
+"var access_logfile = fs.createWriteStream('./app.log', {flags: 'a'})",
+"  , app = express();",
+"",
+"app.set('port', process.env.PORT || konter.port);",
+"",
+"var server = require('http').createServer(app)",
+", io = require('socket.io').listen(server);",
+"",
+"konter.db.open( konter.config.db.url );",
+"konter.initModels();",
+"",
+"server.listen(app.get('port'), function(){",
+"  console.log('konter server listening on port ' + app.get('port'));",
+"});",
+"",
+"app.configure(function(){",
+"",
+"  konter.inject( express, app, io ); // inject app with konter defaults and plugins",
+"",
+"  // load external ioweb plugins",
+"  konter.registerPlugin( app, require('konter-web').konter.plugins );",
+"",
+"});",
+"",
+"app.configure('development', function(){",
+"  app.use(express.logger('dev'));",
+"  app.use(express.errorHandler());",
+"  app.locals.pretty = true;",
+"});",
+"",
+"app.configure('development', function(){",
+"  app.use(express.logger({stream: access_logfile }));",
+"  app.locals.pretty = true;",
+"});",
+"",
+"app.get('/', function( req, res ){",
+"  res.redirect('/admin');",
+"});",
+""
+].join(eol);
+
+var gitignore = [
+'node_modules',
+'Thumbs.db',
+'.DS_Store',
+'datastore'
+];
+
+var settings_json = [
+'{',
+'"hostname": "http://localhost:8080",',
+'"log": {',
+'  "level": 3',
+'},',
+'"site": {',
+'  "title": "__appName__",',
+'  "locales": ["de", "en"],',
+'  "fallbackLocale": "en",',
+'  "layouts": ["default"]',
+'  },',
+'  "session": {',
+'    "timeout": {',
+'      "mins": 120',
+'    },',
+'    "secret": "__secret__"',
+'  },',
+'  "datastore": {',
+'    "path": "./datastore",',
+'    "maxUploadSizeMB": 50,',
+'    "resizeDefaultPX": 500',
+'  },',
+'  "db": {',
+'    "url": "mongodb://localhost:27017/__appName__?auto_reconnect",',
+'    "debug": true',
+'  },',
+'  "groups": ["manager"],',
+'  "mailerSettings": { "host": "localhost.loc", "port": 25, "domain": "localhost.loc", "authentication": false },',
+'  "mailerFrom": "__appName__ <automailer@kontercms.com>"',
+'}'
+].join(eol);
+
+var package_json = [
+'{',
+'  "name": "__appName__",',
+'  "version": "0.0.1",',
+'  "preferGlobal": "true",',
+'  "main": "index",',
+'  "dependencies": {',
+'    "moment": "1.7.x",',
+'    "socket.io": "0.9.x",',
+'    "express": "3.0.x",',
+'    "jade": "0.27.x",',
+'    "stylus": "0.30.x",',
+'    "konter": "git://github.com/tastenwerk/konter.git#0.0.5",',
+'    "konter-web": "git://github.com/tastenwerk/konter-web.git#0.0.3"',
+'  },',
+'  "license": "GPL3",',
+'  "engine": {',
+'    "node": ">=0.8"',
+'  }',
+'}'
+].join(eol);
+
+program
+  .command('new <name>')
+  .description('create a new konter scaffold')
+  .action( function createScaffold( name ){
+    var normalizedName = name.replace(/ /g, '_');
+    console.log();
+    mkdir( name );
+    mkdir( name + '/app');
+    mkdir( name + '/app/plugins');
+    mkdir( name + '/app/views');
+    mkdir( name + '/config');
+    mkdir( name + '/public');
+    mkdir( name + '/datastore');
+    mkdir( name + '/datastore/files');
+    mkdir( name + '/datastore/users');
+    mkdir( name + '/public/stylesheets');
+    mkdir( name + '/public/javascripts');
+    mkdir( name + '/public/images');
+    write( name + '/app.js', app_js );
+    write( name + '/public/stylesheets/konter-page.styl', 'body\n  .konter-page\n    margin: 0' );
+    write( name + '/config/settings.json', settings_json.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
+    write( name + '/.gitignore', gitignore );
+    write( name + '/package.json', package_json.replace( /__appName__/g, name.replace(/ /g, '_') ) );
+    write( name + '/README.md', name + ' README' );
+    console.log();
+    console.log('   \x1b[32msuccess\x1b[0m');
+    console.log();
+    console.log('   run \x1b[1mcd '+name+' && npm install\x1b[0m next!')
+    console.log();
+  });
+
+program
+  .command('setup [username] [password]')
+  .description('DEPRECATED - setup a manager user and if specified in the configuration website and -pages. If config/tas10_settings.json is not present, it should be passed as argument')
+  .action( function setupScaffold( username, password ){
+    /*
+    console.log();
+    configfile = './config/settings.json';
+    if( !fs.existsSync( './' + configfile ) )
+      return console.log('   \033[31merror\033[0m : ', configfile, ' was not found (if not config/settings.json, please pass it as argment)');
+    openConnection( configfile, username, password );
+    console.log();
+    */
+    console.log('this command is deprecated! Just start konter instead!')
+  })
+
+program.parse(process.argv);
+
+/**
+ * echo str > path.
+ *
+ * @param {String} path
+ * @param {String} str
+ */
+
+function write(path, str) {
+  fs.writeFile(path, str);
+  console.log('   \x1b[36mcreate\x1b[0m : ' + path);
+}
+
+/**
+ * Mkdir -p.
+ *
+ * @param {String} path
+ * @param {Function} fn
+ */
+
+function mkdir(path) {
+  try{
+    fs.mkdirSync( path );
+    console.log('   \033[36mcreate\033[0m : ' + path);
+  } catch( e ){
+    console.log('   \033[31mskipped\033[0m : ' + path + ' exists');
+  }
+}
+
+function openConnection( configfile, username, password ){
+
+  var username = username || 'manager'
+    , password = password || 'mgr'
+    , konter = require(__dirname+'/../lib/konter')
+    , domain = konter.config.hostname.split(':')[1];
+
+  domain = domain ? domain.replace('//','') : 'localhost.loc';
+
+  if( !konter.config.db )
+    return exitError( configfile + ' does not provide db information. Please check')
+  konter.db.open( konter.config.db.url );
+  konter.initModels();
+
+  konter.db.model('User').findOne({ email: username+'@'+domain }, function( err, user ){
+    var domainName = domain;
+    if( domainName === 'localhost' )
+      domainName = 'localhost.loc';
+    if( err ) exitError( err.message );
+    if( user ){
+      console.log('   \033[31mskipped\033[0m : user ' + username + ' already exists');
+      console.log();
+      process.exit(0);
+    } else
+      konter.db.model('User').create({ email: username+'@'+domainName, name: {nick: username}, groups: ['manager'], password: password}, function( err, user ){
+        if( err )
+          exitError( 'error creating user: ' + err + ' email: ' + username+'@'+konter.config.site.domain );
+        else
+          console.log('   \033[36mcreate\033[0m : user:' + user.name.nick + ' email:' + user.email + ' with password:' + password );
+        console.log();
+        
+        process.exit(0);
+
+      });
+
+  });
+
+}
+
+function exitError( msg ){
+  console.log('   \033[31merror\033[0m : ' + msg );
+}
+
