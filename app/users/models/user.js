@@ -11,7 +11,8 @@
  */
 
 var db = require( __dirname + '/../../../lib/db' )
-  , crypto = require('crypto');
+  , crypto = require('crypto')
+  , moment = require('moment');
 
 var UserMessagesSchema = require( __dirname+'/user_messages_schema' )
   , UserLoginLogSchema = require( __dirname+'/user_login_log_schema' );
@@ -22,8 +23,8 @@ var UserSchema = db.Schema({
     last: String,
     nick: { type: String, lowercase: true, index: { unique: true } }
   },
-  hashedPassword: {type: String, required: true},
-  salt: {type: String, required: true},
+  hashedPassword: String,
+  salt: String,
   preferences: {type: db.Schema.Types.Mixed, default: { common: { locale: 'en', hosts: [] }, docklets: [ 'notification_service/docklets/summary' ] } },
   picCropCoords: { type: db.Schema.Types.Mixed, default: { w: 0, h: 0, x: 0, y: 0 } },
   messages: {
@@ -44,7 +45,7 @@ var UserSchema = db.Schema({
   confirmation: {
     key: String,
     expires: Date,
-    tries: { type: Number, default: 3}
+    tries: Number
   },
   createdAt: { type: Date, default: Date.now },
   suspended: { type: Boolean, default: false }
@@ -84,6 +85,44 @@ UserSchema.virtual('name.full').get( getUserFullName ).set( function( name ){
 });
 
 /**
+ * setup name.nick with name.first and name.last
+ * if not given
+ *
+ * @api private
+ */
+UserSchema.pre('validate', function( next ){
+  if( !this.isNew ) return next();
+  if( !this.name.nick && (this.name.first || this.name.last ) )
+    if( this.name.first && this.name.last )
+      this.name.nick = this.name.first.substr(0,1) + '.' + this.name.last;
+    else if( this.name.last )
+      this.name.nick = this.name.last;
+    else if( this.name.first )
+      this.name.nick = this.name.first;
+  next();
+});
+
+/**
+ * check if password wants to be set. If not
+ * set a hashed password to an arbitrary value
+ *
+ * @api private
+ */
+UserSchema.pre('save', function( next ){
+  if( this.isNew ){
+    if( !this.password && !this.hashedPassword ){
+      this.password = (new Date()).getTime().toString(32);
+    }
+    this.confirmation = {
+      key: crypto.createHmac('sha1','konter').update((new Date()).getTime().toString(32)).digest('hex'),
+      expires: moment().add('h', 24).toDate(),
+      tries: 3
+    };
+  }
+  next();
+});
+
+/**
  * show the number of unread messages
  *
  */
@@ -103,7 +142,7 @@ UserSchema.virtual('unreadMessages').get( function(){
 UserSchema.virtual('password').set(function( password ) {
     this._password = password;
     this.salt = this.generateSalt();
-    this.hashedPassword = this.encryptPassword(password);
+    this.hashedPassword = this.constructor.encryptPassword(password, this.salt);
 })
 
 /**
@@ -134,7 +173,7 @@ UserSchema.method('isAdmin', function(){
  * the database
  */
 UserSchema.method('authenticate', function(plainTextPassword) {
-  return this.encryptPassword(plainTextPassword) === this.hashedPassword;
+  return this.constructor.encryptPassword(plainTextPassword, this.salt) === this.hashedPassword;
 });
 
 /**
@@ -153,9 +192,9 @@ UserSchema.method('generateSalt', function() {
  * @param {String} password - clear text password string
  * to be encrypted
  */
-UserSchema.method('encryptPassword', function(password) {
-  return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
-});
+UserSchema.statics.encryptPassword = function(password, salt) {
+  return crypto.createHmac('sha1', salt).update(password).digest('hex');
+}
 
 /**
  * anybody user id

@@ -21,3 +21,10 @@ konter.server.start();
 var helper = module.exports = {};
 
 helper.user_defaults = { name: { first: 'Richard', last: 'Gloucester' }, email: 'richard@gloucester' };
+
+helper.cleanUp = function( callback ){
+  konter.db.model('User').remove({}, function( err ){
+    if( err ) console.log('error when removing users', err);
+    callback();
+  })
+}
