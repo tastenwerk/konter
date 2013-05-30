@@ -18,7 +18,7 @@ var db = require( __dirname + '/../../../lib/db' );
  * the login log keeps track of
  * the users logins
  */
-var UserLoginLogSchema = new db.Schema({
+var UserLoginLogSchema = module.exports = new db.Schema({
   ip: String,
   createdAt: { type: Date, default: Date.now }
 });

@@ -15,6 +15,7 @@ var db = require( __dirname + '/../../../lib/db' )
   , moment = require('moment');
 
 var UserMessagesSchema = require( __dirname+'/user_messages_schema' )
+  , UserACLSchema = require( __dirname+'/user_acl_schema' )
   , UserLoginLogSchema = require( __dirname+'/user_login_log_schema' );
 
 var UserSchema = db.Schema({
@@ -26,7 +27,6 @@ var UserSchema = db.Schema({
   hashedPassword: String,
   salt: String,
   preferences: {type: db.Schema.Types.Mixed, default: { common: { locale: 'en', hosts: [] }, docklets: [ 'notification_service/docklets/summary' ] } },
-  picCropCoords: { type: db.Schema.Types.Mixed, default: { w: 0, h: 0, x: 0, y: 0 } },
   messages: {
     inbox: [ UserMessagesSchema ],
     outbox: [ UserMessagesSchema ]
@@ -34,20 +34,23 @@ var UserSchema = db.Schema({
   email: {type: String, 
           lowercase: true,
           required: true,
-          index: { unique: true } },
+          index: { unique: true },
+          match: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i },
   loginLog: [ UserLoginLogSchema ],
   friends: [{ type: db.Schema.Types.ObjectId, ref: 'User' }],
+  acl: [ UserACLSchema ],
   lastRequest: {
     createdAt: Date,
     ip: String
   },
   roles: {type: Array, default: []},
+  groups: [{ type: db.Schema.ObjectId, ref: 'Group' }],
   confirmation: {
     key: String,
     expires: Date,
     tries: Number
   },
-  createdAt: { type: Date, default: Date.now },
+  _createdAt: { type: Date, default: Date.now },
   suspended: { type: Boolean, default: false }
 });
 
@@ -83,6 +86,81 @@ UserSchema.virtual('name.full').get( getUserFullName ).set( function( name ){
   } else
     this.name.first = name;
 });
+
+/**
+ * allowedApps
+ *
+ * fills callback arg1 with allowed apps the user can access through their
+ * group membership (allowedApps is stored in groups only)
+ *
+ * @api public
+ */
+UserSchema.method('allowedApps', function( callback ){
+  var allowed = [];
+  this.getGroups( function( err, groups ){
+    for( var i in groups )
+      for( var j in groups[i].allowedApps )
+        if( allowed.indexOf( groups[i].allowedApps[j] ) < 0 )
+          allowed.push( groups[i].allowedApps[j] );
+    callback( err, allowed );
+  })
+});
+
+/**
+ * getGroups
+ *
+ * loads membership groups of the user from the database and
+ * caches groups, if they have been loaded once.
+ *
+ * @param {Object} options
+ * * cache: false (do not use cache) 
+ * 
+ * @api public
+ *
+ */
+UserSchema.method('getGroups', function( options, callback ){
+  if( typeof(options) === 'function' ){
+    callback = options;
+    options = {};
+  }
+  options.cache = options.cache || false;
+
+  if( this.cachedGroups && options.cache )
+    return callback( null, this.cachedGroups );
+
+  if( this.groups && this.groups.length > 0 && this.groups[0].allowedApps ){
+    this.cachedGroups = this.groups;
+    return callback( null, this.cachedGroups );
+  }
+
+  if( this.groups.length > 0 )
+    loadNextGroup.call( this, 0, callback );
+  else
+    callback( null, [] );
+
+});
+
+/**
+ * loads next Groups, until this.cachedGroups object is filled with
+ * this.groups or returns error
+ *
+ * @api private
+ */
+function loadNextGroup( count, callback ){
+  var self = this;
+  if( this.cachedGroups && this.cachedGroups.length >= this.groups.length )
+    return callback( null, this.cachedGroups );
+  this.cachedGroups = this.cachedGroups || [];
+  db.models.Group.findById( this.groups[count], function( err, group ){
+    if( err )
+      return callback( err );
+    if( group )
+      self.cachedGroups.push( group );
+    else
+      return callback( 'could not find group with id', this.groups[count] );
+    loadNextGroup.call( self, ++count, callback );
+  });
+}
 
 /**
  * setup name.nick with name.first and name.last

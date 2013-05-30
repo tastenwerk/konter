@@ -21,7 +21,7 @@ var db = require( __dirname + '/../../../lib/db' );
  * this Schema is embedded in the user object
  *
  */
-var UserMessagesSchema = new db.Schema({
+var UserMessagesSchema = module.exports = new db.Schema({
   content: String,
   readAt: Date,
   deletedAt: Date,

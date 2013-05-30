@@ -35,7 +35,7 @@
     "gm": "1.9.x",
     "nodemailer": "0.4.x",
     "string": "1.1.0",
-    "bcrypt": "*"
+    "async": "0.2.8"
   },
   "devDependencies": {
     "should": "x.x.x",

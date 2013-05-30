@@ -1,0 +1,28 @@
+# SPEC Version 1
+
+Users and Groups are access holding objects.
+
+acl
+ - /documentA
+   - privileges 'rwsdc'
+ - /
+
+
+a nested document structure can be access, as the document itself knows
+it's location.
+
+documentX
+path: Folder:ID/Folder:ID1/Webpage:ID2,Folder:ID4/Webpage:ID3
+
+If looking up for children of Folder:ID, the pathd
+
+
+DocumentInformation Collection stores access and path privileges
+
+documentA has a unique ID
+
+this ID is stored as documentID in the DocumentInformation object along
+with documentType, path array and access privileges.
+
+not every document is added to the acl of the user
+if a user is the document's creator they will allways be able to access it

@@ -32,14 +32,73 @@ describe('User Model', function(){
 
       });
 
+      describe('#name.full', function(){
+
+        it('should have a full property', function(){
+          user.should.have.property('name').with.property('full');
+        });
+
+        it('fullname returns firstname[space]lastname', function(){
+          user.name.full.should.eql(user.name.first + ' ' + user.name.last);
+        });
+
+        it('will return firstname if no lastname is given (without a space)', function(){
+          user.name.last = null;
+          user.name.first.should.eql(user.name.full);
+        });
+
+        it('will return lastname if no firstname is given (without a space)', function(){
+          user.name.first = null;
+          user.name.last = 'v.';
+          user.name.last.should.eql(user.name.full);
+        });
+
+        it('will return nickname if neither firstname nor lastname is given', function(){
+          user.name.last = user.name.first = null;
+          user.name.nick.should.eql(user.name.full);
+        });
+
+        it('will return email address if none of the above attributes is given', function(){
+          user.name.last = user.name.first = user.name.nick = null;
+          user.email.should.eql(user.name.full);
+        });
+
+      });
+
+
+    });
+
+  });
+
+  describe('required fields', function(){
+
+    it('must have an email address set', function( done ){
+      var user = new konter.db.models.User({});
+      user.save( function( err ){
+        err.errors.email.type.should.eql('required');
+        done();
+      });
+    });
+
+    it('must have a valid email address', function( done ){
+      var user = new konter.db.models.User({ email: 'henry' });
+      user.save( function( err ){
+        err.errors.email.type.should.eql('regexp');
+        done();
+      });
     });
 
   });
 
   describe( 'pre save methods', function(){
 
+
+    var user = new konter.db.model('User')( helper.user_defaults );
+
     before(function( done ){
+      user.name.nick = null;
       user.save( function( err ){
+        if( err ) console.log(' ------------------------ ERROR: ', err);
         konter.db.model('User').findById( user._id, function( err, _u ){
           user = _u;
           done();
@@ -62,6 +121,14 @@ describe('User Model', function(){
       });
 
     });
+
+    describe('hashed password if no password', function(){
+
+      it('has a hahsed password if no password has been set', function(){
+        user.hashedPassword.should.be.lengthOf(40);
+      })
+
+    })
 
   });
 
