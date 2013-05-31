@@ -1,0 +1,31 @@
+extends ../layout
+
+block header
+  link(rel='stylesheet', href='/stylesheets/konter.auth.css')
+  link(rel='stylesheet', href='/stylesheets/konter.core.css')
+  link(rel='stylesheet', href='/stylesheets/3rdparty/kendoui/kendo.css')
+
+  script(type='text/javascript', src='/javascripts/konter.auth.js')
+
+block content
+
+  #login-content
+
+    #login-logo
+      img( src='/images/logo_200x76g.png')
+
+    form.content-padding( action='/login', method='post' )
+      input( type='hidden', name='_csrf', value=_csrf )
+
+      p
+        label Email
+        br
+        input.js-get-focus( type='text', name='email', placeholder='Email' )
+      p
+        label Password
+        br
+        input( type='password', name='password', placeholder'Password' )
+
+      p(style='text-align: right')
+        a.btn( href='/forgot_password' ) Forgot Password
+        button.btn(type='submit') Login

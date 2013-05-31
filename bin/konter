@@ -50,7 +50,7 @@ var package_json = [
 '    "express": "3.2.x",',
 '    "jade": "0.27.x",',
 '    "stylus": "0.30.x",',
-'    "konter": "git://github.com/tastenwerk/konter.git#0.0.1",',
+'    "konter": "git://github.com/tastenwerk/konter.git#0.0.1"',
 '  },',
 '  "license": "GPL3",',
 '  "engine": {',
@@ -78,7 +78,7 @@ var routes_json = [
 "  // define your routes here",
 "",
 "}"
-];
+].join(eol);
 
 program
   .command('new <name>')
@@ -88,6 +88,7 @@ program
     console.log();
     mkdir( name );
     mkdir( name + '/app');
+    mkdir( name + '/app/views');
     mkdir( name + '/config');
     mkdir( name + '/public');
     mkdir( name + '/datastore');
@@ -100,7 +101,7 @@ program
     write( name + '/public/stylesheets/app.styl', 'body\n  .konter-page\n    margin: 0' );
     write( name + '/public/javascripts/app.js', '$(document).ready( function(){\n});' );
     write( name + '/config/environment.json', environment_json.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
-    write( name + '/config/routes.json', routes_json.replace( /__appName__/g, normalizedName ) );
+    write( name + '/config/routes.js', routes_json.replace( /__appName__/g, normalizedName ) );
     write( name + '/.gitignore', gitignore );
     write( name + '/package.json', package_json.replace( /__appName__/g, name.replace(/ /g, '_') ) );
     write( name + '/README.md', '#' + name + ' README' );

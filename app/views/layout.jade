@@ -1,0 +1,10 @@
+!!! 5
+html
+  head
+    block header
+      include _header
+
+  body
+    input( type='hidden', id='_csrf', value=_csrf )
+
+    block content

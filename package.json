@@ -35,7 +35,8 @@
     "gm": "1.9.x",
     "nodemailer": "0.4.x",
     "string": "1.1.0",
-    "async": "0.2.8"
+    "async": "0.2.8",
+    "less-middleware": "0.1.11"
   },
   "devDependencies": {
     "should": "x.x.x",
