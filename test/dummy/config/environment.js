@@ -1,9 +1,13 @@
 /**
  * application config
  */
-var config = module.exports = {};
 
-config.port = 3000;
+var konter = require( __dirname+'/../../../lib/konter' );
 
-config.db = {};
-config.db.name = 'konter-test';
+konter.config.port = 3000;
+
+konter.config.log.level = 3;
+
+konter.config.db.name = 'konter-test';
+
+konter.config.site.title = 'konter test';

@@ -11,47 +11,9 @@ program.version(version);
 var eol = 'win32' == os.platform() ? '\r\n' : '\n'
 
 var app_js = [
-"var konter = require('konter')",
+"var konter = require( 'konter' );",
 "",
-"var access_logfile = fs.createWriteStream('./app.log', {flags: 'a'})",
-"  , app = express();",
-"",
-"app.set('port', process.env.PORT || konter.port);",
-"",
-"var server = require('http').createServer(app)",
-", io = require('socket.io').listen(server);",
-"",
-"konter.db.open( konter.config.db.url );",
-"konter.initModels();",
-"",
-"server.listen(app.get('port'), function(){",
-"  console.log('konter server listening on port ' + app.get('port'));",
-"});",
-"",
-"app.configure(function(){",
-"",
-"  konter.inject( express, app, io ); // inject app with konter defaults and plugins",
-"",
-"  // load external ioweb plugins",
-"  konter.registerPlugin( app, require('konter-web').konter.plugins );",
-"",
-"});",
-"",
-"app.configure('development', function(){",
-"  app.use(express.logger('dev'));",
-"  app.use(express.errorHandler());",
-"  app.locals.pretty = true;",
-"});",
-"",
-"app.configure('development', function(){",
-"  app.use(express.logger({stream: access_logfile }));",
-"  app.locals.pretty = true;",
-"});",
-"",
-"app.get('/', function( req, res ){",
-"  res.redirect('/admin');",
-"});",
-""
+"konter.server.start();"
 ].join(eol);
 
 var gitignore = [
@@ -61,60 +23,62 @@ var gitignore = [
 'datastore'
 ];
 
-var settings_json = [
-'{',
-'"hostname": "http://localhost:8080",',
-'"log": {',
-'  "level": 3',
-'},',
-'"site": {',
-'  "title": "__appName__",',
-'  "locales": ["de", "en"],',
-'  "fallbackLocale": "en",',
-'  "layouts": ["default"]',
-'  },',
-'  "session": {',
-'    "timeout": {',
-'      "mins": 120',
-'    },',
-'    "secret": "__secret__"',
-'  },',
-'  "datastore": {',
-'    "path": "./datastore",',
-'    "maxUploadSizeMB": 50,',
-'    "resizeDefaultPX": 500',
-'  },',
-'  "db": {',
-'    "url": "mongodb://localhost:27017/__appName__?auto_reconnect",',
-'    "debug": true',
-'  },',
-'  "groups": ["manager"],',
-'  "mailerSettings": { "host": "localhost.loc", "port": 25, "domain": "localhost.loc", "authentication": false },',
-'  "mailerFrom": "__appName__ <automailer@kontercms.com>"',
-'}'
+var environment_json = [
+"/**",
+" * app environment",
+" *",
+" */",
+"var konter = require('konter');",
+"",
+"konter.config.port = 3000;",
+"",
+"konter.config.db.name = 'konter-test';",
+"",
+"konter.config.site.title = '__appName__';",
+"",
+"konter.config.log.level = 3; // 3 ... verbose, 0 ... errors only"
 ].join(eol);
 
 var package_json = [
 '{',
 '  "name": "__appName__",',
 '  "version": "0.0.1",',
-'  "preferGlobal": "true",',
+'  "preferGlobal": "false",',
 '  "main": "index",',
 '  "dependencies": {',
-'    "moment": "1.7.x",',
-'    "socket.io": "0.9.x",',
-'    "express": "3.0.x",',
+'    "moment": "2.0.x",',
+'    "express": "3.2.x",',
 '    "jade": "0.27.x",',
 '    "stylus": "0.30.x",',
-'    "konter": "git://github.com/tastenwerk/konter.git#0.0.5",',
-'    "konter-web": "git://github.com/tastenwerk/konter-web.git#0.0.3"',
+'    "konter": "git://github.com/tastenwerk/konter.git#0.0.1",',
 '  },',
 '  "license": "GPL3",',
 '  "engine": {',
-'    "node": ">=0.8"',
+'    "node": ">=0.12"',
 '  }',
 '}'
 ].join(eol);
+
+var routes_json = [
+"/**",
+" * __appName__ routes",
+" *",
+" * a route generally points to a logical coherent directory where a ",
+" * routes/logic_coherent_routes.js file is expected",
+" *",
+" * if the directory contains a models folder, the contents of that folder",
+" * are parsed as well",
+" * same for middleware folder",
+" *",
+" */",
+"",
+"var routes = module.exports = function appRoutes( router ){",
+"",
+"  router.use( 'konter' );",
+"  // define your routes here",
+"",
+"}"
+];
 
 program
   .command('new <name>')
@@ -124,8 +88,6 @@ program
     console.log();
     mkdir( name );
     mkdir( name + '/app');
-    mkdir( name + '/app/plugins');
-    mkdir( name + '/app/views');
     mkdir( name + '/config');
     mkdir( name + '/public');
     mkdir( name + '/datastore');
@@ -135,32 +97,19 @@ program
     mkdir( name + '/public/javascripts');
     mkdir( name + '/public/images');
     write( name + '/app.js', app_js );
-    write( name + '/public/stylesheets/konter-page.styl', 'body\n  .konter-page\n    margin: 0' );
-    write( name + '/config/settings.json', settings_json.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
+    write( name + '/public/stylesheets/app.styl', 'body\n  .konter-page\n    margin: 0' );
+    write( name + '/public/javascripts/app.js', '$(document).ready( function(){\n});' );
+    write( name + '/config/environment.json', environment_json.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
+    write( name + '/config/routes.json', routes_json.replace( /__appName__/g, normalizedName ) );
     write( name + '/.gitignore', gitignore );
     write( name + '/package.json', package_json.replace( /__appName__/g, name.replace(/ /g, '_') ) );
-    write( name + '/README.md', name + ' README' );
+    write( name + '/README.md', '#' + name + ' README' );
     console.log();
     console.log('   \x1b[32msuccess\x1b[0m');
     console.log();
     console.log('   run \x1b[1mcd '+name+' && npm install\x1b[0m next!')
     console.log();
   });
-
-program
-  .command('setup [username] [password]')
-  .description('DEPRECATED - setup a manager user and if specified in the configuration website and -pages. If config/tas10_settings.json is not present, it should be passed as argument')
-  .action( function setupScaffold( username, password ){
-    /*
-    console.log();
-    configfile = './config/settings.json';
-    if( !fs.existsSync( './' + configfile ) )
-      return console.log('   \033[31merror\033[0m : ', configfile, ' was not found (if not config/settings.json, please pass it as argment)');
-    openConnection( configfile, username, password );
-    console.log();
-    */
-    console.log('this command is deprecated! Just start konter instead!')
-  })
 
 program.parse(process.argv);
 

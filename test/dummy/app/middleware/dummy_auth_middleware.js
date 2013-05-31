@@ -1,8 +1,6 @@
-var DummyAuth = module.exports = {
-  
-  check: function( req, res, next ){
-    console.log('check');
-    next();
-  }
+var AuthMiddleware = module.exports = {};
 
+AuthMiddleware.checkDummy = function( req, res, next ){
+  console.log('auth dummy');
+  next();
 }

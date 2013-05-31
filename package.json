@@ -1,6 +1,6 @@
 {
   "name": "konter",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "[c->k]ontent repository [core] for team collaboration",
   "main": "lib/konter.js",
   "scripts": {
