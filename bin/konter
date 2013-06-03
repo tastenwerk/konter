@@ -35,6 +35,7 @@ var environment_json = [
 "konter.config.db.name = 'konter-test';",
 "",
 "konter.config.site.title = '__appName__';",
+"konter.config.site.domain = 'localhost.site';",
 "",
 "konter.config.log.level = 3; // 3 ... verbose, 0 ... errors only"
 ].join(eol);

@@ -23,22 +23,23 @@
   ],
   "dependencies": {
     "colors": "*",
-    "mongoose": "3.6.11",
-    "mongoose-json-select": "0.2.0",
     "commander": "1.1.1",
     "moment": "2.x.x",
-    "stylus": "0.31.x",
     "i18next": "1.5.x",
     "jade": "0.26.x",
     "ejs": "0.8.x",
-    "connect-mongo": "0.3.x",
     "gm": "1.9.x",
     "nodemailer": "0.4.x",
     "string": "1.1.0",
     "async": "0.2.8",
-    "less-middleware": "0.1.11"
+    "less-middleware": "0.1.11",
+    "globalize": "0.1.1"
   },
   "devDependencies": {
+    "mongoose": "3.6.11",
+    "mongoose-json-select": "0.2.0",
+    "connect-mongo": "0.3.x",
+    "ejdb": "x.x.x",
     "should": "x.x.x",
     "mocha": "1.x.x",
     "superagent": "*"

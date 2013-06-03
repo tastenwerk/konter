@@ -26,7 +26,7 @@ var UserSchema = db.Schema({
   },
   hashedPassword: String,
   salt: String,
-  preferences: {type: db.Schema.Types.Mixed, default: { common: { locale: 'en', hosts: [] }, docklets: [ 'notification_service/docklets/summary' ] } },
+  preferences: {type: db.Schema.Types.Mixed, default: { common: { culture: 'en', hosts: [] }, docklets: [ 'notification_service/docklets/summary' ] } },
   messages: {
     inbox: [ UserMessagesSchema ],
     outbox: [ UserMessagesSchema ]
@@ -43,7 +43,7 @@ var UserSchema = db.Schema({
     createdAt: Date,
     ip: String
   },
-  roles: {type: Array, default: []},
+  roles: {type: Array, default: ['user']},
   groups: [{ type: db.Schema.ObjectId, ref: 'Group' }],
   confirmation: {
     key: String,
@@ -238,7 +238,7 @@ UserSchema.virtual('password').get(function() {
  *
  */
 UserSchema.method('isAdmin', function(){
-  return this.roles.indexOf('manager') >= 0;
+  return this.roles.indexOf('admin') >= 0;
 });
 
 /**

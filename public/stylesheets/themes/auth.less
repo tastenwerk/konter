@@ -1,0 +1,54 @@
+@import "../kendoui/kendo.common.min.css";
+@import "../kendoui/kendo.less";
+@import "default.less";
+@background: @tw-orange;
+@login-bg: #fff;
+@login-border: 1px solid #aaa;
+
+.login-container{
+  .absolute-center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  width: 550px;
+  height: 240px;
+  border: @login-border;
+  background: @login-bg;
+  padding: 20px;
+  
+  input[type=text], input[type=password], button[type=submit]{
+    width: 100%;
+    font-size: 1em;
+    padding: 7px 0;
+    text-indent: 7px;
+  }
+
+  button[type=submit]{
+    padding: 5px;
+    font-weight: 600;
+  }
+
+  label{
+    font-size: 1em;
+    color: @tw-grey-text;
+  }
+
+  form{
+    margin-top: 35px;
+    width: 280px;
+  }
+
+  p{
+    margin: 5px 0;
+  }
+
+  .footer{
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    right: 10px;
+    font-size: 0.8em;
+    a{
+      color: @tw-grey-text;
+    }
+  }
+
+}

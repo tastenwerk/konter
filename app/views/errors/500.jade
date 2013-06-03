@@ -1,7 +1,7 @@
 !!! 5
 html
   head
-    title=konter.config.site.title + ' OUPS! (500)'
+    title=(typeof(konter) !== 'undefined' && konter.config && konter.config.site && konter.config.site.title ? konter.config.site.title : '') + ' OUPS! (500)'
   body
     h1 OUPS!
     p Something went wrong
