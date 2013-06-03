@@ -19,6 +19,14 @@
     font-size: 1em;
     padding: 7px 0;
     text-indent: 7px;
+    &.error{
+      border-color: #d00;
+    }
+  }
+
+  span.required-star{
+    color: #d00;
+    font-weight: 600;
   }
 
   button[type=submit]{
@@ -29,6 +37,10 @@
   label{
     font-size: 1em;
     color: @tw-grey-text;
+    &.error{
+      color: #d00;
+      font-weight: 600;
+    }
   }
 
   form{
@@ -51,4 +63,27 @@
     }
   }
 
+}
+
+.login-flash{
+  width: 550px;
+  height: 20px;
+  border: @login-border;
+  background: @login-bg;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+  &.error{
+    background: #d00;
+    color: #fff;
+  }
+  &.notice{
+    background: #9bf;
+  }
 }

@@ -23,7 +23,7 @@ var gitignore = [
 'datastore'
 ];
 
-var environment_json = [
+var environment_js = [
 "/**",
 " * app environment",
 " *",
@@ -32,7 +32,7 @@ var environment_json = [
 "",
 "konter.config.port = 3000;",
 "",
-"konter.config.db.name = 'konter-test';",
+"konter.config.db.name = '__appName__';",
 "",
 "konter.config.site.title = '__appName__';",
 "konter.config.site.domain = 'localhost.site';",
@@ -50,7 +50,6 @@ var package_json = [
 '    "moment": "2.0.x",',
 '    "express": "3.2.x",',
 '    "jade": "0.27.x",',
-'    "stylus": "0.30.x",',
 '    "konter": "git://github.com/tastenwerk/konter.git#0.0.1"',
 '  },',
 '  "license": "GPL3",',
@@ -101,7 +100,7 @@ program
     write( name + '/app.js', app_js );
     write( name + '/public/stylesheets/app.styl', 'body\n  .konter-page\n    margin: 0' );
     write( name + '/public/javascripts/app.js', '$(document).ready( function(){\n});' );
-    write( name + '/config/environment.json', environment_json.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
+    write( name + '/config/environment.js', environment_js.replace( /__appName__/g, normalizedName ).replace(/__absolutePath__/g, process.cwd()+path.sep+normalizedName+path.sep+'datastore').replace('__secret__', (new Date().getTime().toString(32))) );
     write( name + '/config/routes.js', routes_json.replace( /__appName__/g, normalizedName ) );
     write( name + '/.gitignore', gitignore );
     write( name + '/package.json', package_json.replace( /__appName__/g, name.replace(/ /g, '_') ) );

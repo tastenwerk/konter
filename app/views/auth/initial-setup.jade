@@ -1,42 +1,55 @@
 extends ../layout
 
 block header
-  link(rel='stylesheet', href='/stylesheets/login.css')
+  link(rel='stylesheet', href='/stylesheets/themes/auth.css')
+
+  script(type='text/javascript', src='/javascripts/3rdparty/jquery-2.0.2.min.js')
+  script(type='text/javascript', src='/javascripts/konter.auth.js')
+  script(type='text/javascript', src='/javascripts/3rdparty/jquery.validate.min.js')
 
 block content
 
-  #login-content
+  if flash && Object.keys(flash).length > 0
+    .login-flash( class=(flash.error ? 'error' : 'notice') )=flash.error ? flash.error[0] : flash.notice[0]
+  
+  .login-container( style='height: 460px' )
 
-    #login-logo
-      img( src='/images/logo_200x76w.png')
+    .big-logo.pull-right
+      img( src='/images/logo.png' )
+      h1 TASTENBOX
+      h2 collaboration back office
 
-    form.content-padding( action='/ioco-initial-setup', method='post' )
+      p( style='margin-top: 2em' )
+        span.required-star *
+        =t('required fields')
+          
+    form( action='/initial-setup', method='post' )
       input( type='hidden', name='_csrf', value=_csrf )
 
-      h1=t('initial_setup.title')
-      p.desc!=t('initial_setup.desc')
+      h1=t('Welcome aboard!')
+      p.desc!=t('No User accounts have been found on this configuration instance. We assume, this is your first run. Please choose a superuser name, email and password')
       p
-        label=t('user.name')
+        label
+          =t('Username')
+          span.required-star *
         br
-        input.js-get-focus( type='text', name='user[name]', value='manager' )
+        input.js-get-focus( type='text', name='user[name]', value='manager', required )
       p
-        label=t('user.password')
+        label=t('Email')
         br
-        input.js-get-focus( type='password', name='user[password]' )
+        input.js-get-focus( type='text', name='user[email]' )
+      p
+        label
+          =t('Password')
+          span.required-star *
+        br
+        input.js-get-focus( type='password', name='user[password]', required )
 
-      p(style='text-align: right')
-        a.btn( href='/login' )= t('cancel')
-        button.btn(type='submit')= t('create')
-
-
-  -if( flash.error )
-    -for( var i=0,msg; msg=flash.error[i]; i++ )
-      script
-        $(function(){
-          ioco.notify('#{msg}', 'error');
-        });
+      p(style='text-align: right; margin-top: 15px')
+        button.k-button(type='submit')=t('Create')
 
   script
     $(function(){
       $('.js-get-focus:first').focus();
+      $('.login-container form').validate();
     })

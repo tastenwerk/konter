@@ -23,6 +23,11 @@
   ],
   "dependencies": {
     "colors": "*",
+    "mongoose": "3.6.11",
+    "mongoose-json-select": "0.2.0",
+    "connect-mongo": "0.3.x",
+    "express": "3.x.x",
+    "express-validator": "*",
     "commander": "1.1.1",
     "moment": "2.x.x",
     "i18next": "1.5.x",
@@ -36,10 +41,6 @@
     "globalize": "0.1.1"
   },
   "devDependencies": {
-    "mongoose": "3.6.11",
-    "mongoose-json-select": "0.2.0",
-    "connect-mongo": "0.3.x",
-    "ejdb": "x.x.x",
     "should": "x.x.x",
     "mocha": "1.x.x",
     "superagent": "*"

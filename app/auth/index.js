@@ -15,10 +15,10 @@ var konter = require( __dirname+'/../../lib/konter' );
 module.exports = function authRoutes( app, socket ){
 
   app.get( '/login', renderGetLogin );
+  app.post( '/login', konter.plugins.auth.login, renderPostLogin );
 
-  app.get( '/konter-initial-setup', renderGetInitialSetup );
-
-  app.post( '/konter-initial-setup', renderPostInitialSetup );
+  app.get( '/initial-setup', renderGetInitialSetup );
+  app.post( '/initial-setup', renderPostInitialSetup );
 
 }
 
@@ -30,7 +30,23 @@ module.exports = function authRoutes( app, socket ){
  * @api public
  */
 function renderGetLogin( req, res ){
+  req.flash('notice', res.locals.t('Initial setup completed successfully!'))
+  res.locals.flash = req.flash();
   res.render( konter.views.get('auth/login.jade') );
+}
+
+/**
+ * POST /login
+ *
+ * render post login form
+ *
+ * @api public
+ */
+function renderPostLogin( req, res ){
+  if( res.locals.currentUser )
+    res.redirect( '/dashboard' );
+  else
+    res.render( konter.views.get( 'auth/login.jade' ), { flash: req.flash() } );
 }
 
 /**
@@ -46,7 +62,7 @@ function renderGetInitialSetup( req, res ){
     if( users.length > 0 )
       return res.redirect( '/login' );
     req.flash();
-    res.render( __dirname+'/views/initial-setup.jade', { flash: req.flash() } );
+    res.render( konter.views.get('auth/initial-setup.jade'), { flash: req.flash() } );
   });
 }
 
@@ -65,7 +81,7 @@ function renderPostInitialSetup( req, res ){
     if( users.length > 0 )
       return res.redirect( '/login' );
 
-    createNextGroup( 0, ['admins', 'editors', 'users'], [], res );
+    createNextGroup( 0, ['admins', 'editors', 'users'], [], req, res );
 
   });
 
@@ -81,16 +97,16 @@ function renderPostInitialSetup( req, res ){
  *
  * @api private
  */
-function createNextGroup( count, groupIdxs, groups, res ){
+function createNextGroup( count, groupIdxs, groups, req, res ){
 
   if( count >= groupIdxs.length-1 )
-    return createAdmin( groups, res );
+    return createAdmin( groups, req, res );
 
   konter.db.models.Group.create({ name: groupIdxs[count] }, function(err, group){
     if( err ) konter.log.throwError('Could not create group', groupIdxs[count], 'err:', require('util').inspect(err));
     if( !group ) konter.log.throwError('Could not create group. Did not get a valid group object when trying to create group', groupIdxs[count]);
     groups.push( group );
-    createNextGroup( ++count, groupIdxs, groups, res );
+    createNextGroup( ++count, groupIdxs, groups, req, res );
   });
 
 }
@@ -103,7 +119,7 @@ function createNextGroup( count, groupIdxs, groups, res ){
  *
  * @api private
  */
-function createAdmin( groups, res ){
+function createAdmin( groups, req, res ){
 
   konter.db.model('User').create({ name: { nick: req.body.user.name },
                                  email: req.body.user.email || req.body.user.name + '@' + 'konter.site.domain',
@@ -112,7 +128,7 @@ function createAdmin( groups, res ){
                                  function( err, user ){
                                     if( err ) konter.log.throwError('could not create user admin', require('util').inspect(err));
                                     if( !user ) konter.log.throwError('could not create user admin');
-                                    req.flash('notice', req.i18n.t('initial_setup.done', {name: req.body.user.name}));
+                                    req.flash('notice', res.locals.t('Initial setup completed successfully!', {name: req.body.user.name}));
                                     res.redirect('/login');
                                 }
   );
