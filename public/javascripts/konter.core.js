@@ -36,7 +36,7 @@
   function logger( message ){
     var args = Array.prototype.slice.call(arguments);
     try{
-      console.log.apply( this, ['[konter]'+ args );
+      console.log.apply( this, ['[konter]'+ args] );
     } catch(e){ alert('logging not supported')}
 
   }
@@ -191,7 +191,6 @@
     root.konter = {};
   root.konter.notify = notify;
   root.konter.loaderHtml = loader;
-  root.konter.require = require;
   root.konter.sources = sources;
   root.konter.logger = {};
   root.konter.logger.info = logger;

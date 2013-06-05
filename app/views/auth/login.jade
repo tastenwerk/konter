@@ -1,45 +1,47 @@
-extends ../layout
+!!! 5
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/themes/default/auth.css')
+    script(type='text/javascript', src='/javascripts/konter.auth.js')
 
-block header
-  link(rel='stylesheet', href='/stylesheets/themes/auth.css')
+  body
+    input( type='hidden', id='_csrf', value=_csrf )
 
-  script(type='text/javascript', src='/javascripts/konter.auth.js')
+    .main-container
 
-block content
+      if flash && Object.keys(flash).length > 0
+        .login-flash( class=(flash.error ? 'error' : 'notice') )=flash.error ? flash.error[0] : flash.notice[0]
+      
+      .login-container
 
-  if flash && Object.keys(flash).length > 0
-    .login-flash( class=(flash.error ? 'error' : 'notice') )=flash.error ? flash.error[0] : flash.notice[0]
-  
-  .login-container
+        .big-logo.pull-right
+          img( src='/images/logo.png' )
+          h1 TASTENBOX
+          h2 collaboration back office
 
-    .big-logo.pull-right
-      img( src='/images/logo.png' )
-      h1 TASTENBOX
-      h2 collaboration back office
+        form( action='/login', method='post' )
+          input( type='hidden', name='_csrf', value=_csrf )
 
-    form( action='/login', method='post' )
-      input( type='hidden', name='_csrf', value=_csrf )
+          p
+            label
+              =t('Username or Email')
+            br
+            input.js-get-focus( type='text', name='email', required )
+          p
+            label
+              =t('Password')
+            br
+            input.js-get-focus( type='password', name='password', required )
 
-      p
-        label
-          =t('Username or Email')
-        br
-        input.js-get-focus( type='text', name='email', required )
-      p
-        label
-          =t('Password')
-        br
-        input.js-get-focus( type='password', name='password', required )
+          p(style='text-align: right; margin-top: 15px')
+            button.k-button(type='submit')=t('Login')
 
-      p(style='text-align: right; margin-top: 15px')
-        button.k-button(type='submit')=t('Login')
-
-    p.footer
-      span.pull-right
-        !=t('TASTENBOX is a service by TASTENWERK')+' &copy;'
-        =moment().format('YYYY')
-      a( href='/register')=t('Register')
-      |&nbsp;|&nbsp;
-      a( href='/forgot_password' )=t('Forgot password')
-      |&nbsp;|&nbsp;
-      a( href='/forgot_password' )=t('Back to Frontpage')
+        p.footer
+          span.pull-right
+            !=t('TASTENBOX is a service by TASTENWERK')+' &copy;'
+            =moment().format('YYYY')
+          a( href='/register')=t('Register')
+          |&nbsp;|&nbsp;
+          a( href='/forgot_password' )=t('Forgot password')
+          |&nbsp;|&nbsp;
+          a( href='/forgot_password' )=t('Back to Frontpage')

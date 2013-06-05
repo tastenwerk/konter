@@ -7,5 +7,26 @@ html
   body
 
     .main-container
+
+      .konter-bar
+        .logo
+        .account-info-container
+          .account-picture
+          .actions
+            a(href='#')
+              i.icon.icon-user
+              span=t('My Profile')
+            a(href='#')
+              i.icon.icon-off
+              span=t('Log off')
+
+      .icon-bar
+        a(href='#')
+          i.icon-large.white.icon-home
+          span.text=t('Home')
+        a(href='#')
+          i.icon-large.white.icon-list
+          span.text=t('Tasks')
+
       input( type='hidden', id='_csrf', value=_csrf )
       block content

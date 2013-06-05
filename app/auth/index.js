@@ -30,7 +30,6 @@ module.exports = function authRoutes( app, socket ){
  * @api public
  */
 function renderGetLogin( req, res ){
-  req.flash('notice', res.locals.t('Initial setup completed successfully!'))
   res.locals.flash = req.flash();
   res.render( konter.views.get('auth/login.jade') );
 }
