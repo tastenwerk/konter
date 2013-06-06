@@ -1,4 +1,4 @@
-@import "../../kendoui/kendo.common.min.css";
+@import "../../3rdparty/kendoui/kendo.common.min.css";
 .k-in,.k-item,.k-window-action{border-color:transparent;}
 .k-block,.k-widget{background-color:#ffffff;}
 .k-block,.k-widget,.k-input,.k-textbox,.k-group,.k-content,.k-header,.k-editable-area,.k-separator,.k-colorpicker .k-i-arrow-s,.k-textbox>input,.k-autocomplete,.k-dropdown-wrap,.k-toolbar,.k-group-footer td,.k-grid-footer,.k-footer-template td,.k-state-default,.k-state-default .k-select,.k-state-disabled,.k-grid-header-wrap,.k-grid-header,.k-grid td,.k-grid td.k-state-selected,.k-grid-footer-wrap,.k-pager-wrap,.k-pager-wrap .k-link,.k-pager-refresh,.k-grouping-header,.k-grouping-header .k-group-indicator,.k-panelbar>.k-item>.k-link,.k-panel>.k-item>.k-link,.k-panelbar .k-panel,.k-panelbar .k-content,.k-calendar th,.k-slider-track,.k-splitbar,.k-dropzone-active,.k-upload-files,.k-tiles,.k-toolbar,.k-tooltip,.k-progress{border-color:rgba(0, 0, 0, 0.15);}
@@ -106,11 +106,21 @@ input.k-textbox,textarea.k-textbox,input.k-textbox:hover,textarea.k-textbox:hove
 .box-shadow{box-shadow:0 0 20px rgba(0, 0, 0, 0.5);}
 body{margin:0;padding:0;position:absolute;height:100%;width:100%;font-family:'Open Sans','OpenSans',sans-serif;font-size:14px;}
 input[type=text],input[type=password],textarea{border:1px solid #ddd;border-radius:1px;}
+a{color:#333333;text-decoration:none;}
 .pull-right{float:right;}
 .pull-left{float:left;}
 .main-container{background-color:#ffc200;position:absolute;height:100%;width:100%;}
 .main-sidebar{position:absolute;top:0;left:0;bottom:0;background-color:#ffc200;width:50px;box-shadow:1px 0px 5px rgba(50, 20, 0, 0.5);}.main-sidebar.wide{width:250px;}
-.konter-bar{background:url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;height:40px;width:100%;}.konter-bar .logo{background:url('/images/login-box.png');}
+.konter-bar{background:url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;height:40px;width:100%;}.konter-bar .logo{background:url('/images/logo-box.png');width:71px;height:24px;position:absolute;top:8px;left:12px;}
+.konter-bar .account-info-container{position:absolute;top:4px;right:4px;border:1px solid rgba(0, 0, 0, 0.12);background:url('/stylesheets/themes/default/images/account-info-transition.png');border-radius:1px;min-width:200px;height:30px;display:inline-block;}.konter-bar .account-info-container .account-picture{background:url('/images/user_256x256.png');background-size:cover;width:24px;height:24px;border-radius:1px;margin:3px;display:inline-block;float:left;}
+.konter-bar .account-info-container .actions{display:inline-block;margin:6px 5px;}
+.konter-bar .account-info-container a{float:left;font-size:0.9em;opacity:0.6;margin-right:5px;}.konter-bar .account-info-container a .icon{margin-right:1px;float:left;margin-top:3px;}
+.konter-bar .account-info-container a:hover{opacity:1;}
+.icon-bar{background:url('/stylesheets/themes/default/images/side-bar-transition.png') #444444;position:absolute;top:40px;left:0;width:60px;bottom:0;}.icon-bar a{width:60px;height:54px;display:block;padding:3px 0;border-bottom:1px solid rgba(255, 255, 255, 0.05);position:relative;background:transparent;}.icon-bar a .icon-large{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;right:3px;bottom:10px;opacity:0.5;}
+.icon-bar a .text{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;top:auto;bottom:5px;right:7px;font-size:9px;font-weight:100;text-transform:uppercase;color:#fff;opacity:0.5;text-align:center;}
+.icon-bar a:hover{background:rgba(0, 0, 0, 0.3);}.icon-bar a:hover .icon-large,.icon-bar a:hover .text{opacity:0.8;}
+.icon-bar a.active .icon-large,.icon-bar a.active .text{opacity:1;}
+.icon-bar a.active .icon-large{background-image:url('/stylesheets/3rdparty/glyphicons/glyphicons-orange.png');}
 .login-container{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;box-shadow:0 0 20px rgba(0, 0, 0, 0.7);width:550px;height:240px;border:1px solid #aaaaaa;background:#ffffff;padding:20px;}.login-container input[type=text],.login-container input[type=password],.login-container button[type=submit]{width:100%;font-size:1em;padding:7px 0;text-indent:7px;}.login-container input[type=text].error,.login-container input[type=password].error,.login-container button[type=submit].error{border-color:#d00;}
 .login-container span.required-star{color:#d00;font-weight:600;}
 .login-container button[type=submit]{padding:5px;font-weight:600;}

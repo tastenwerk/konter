@@ -2,6 +2,7 @@
 html
   head
     link(rel='stylesheet', href='/stylesheets/themes/default/auth.css')
+    script(type='text/javascript', src='/javascripts/3rdparty/jquery-2.0.2.min.js')
     script(type='text/javascript', src='/javascripts/konter.auth.js')
 
   body
@@ -11,7 +12,7 @@ html
 
       if flash && Object.keys(flash).length > 0
         .login-flash( class=(flash.error ? 'error' : 'notice') )=flash.error ? flash.error[0] : flash.notice[0]
-      
+
       .login-container
 
         .big-logo.pull-right
@@ -31,7 +32,7 @@ html
             label
               =t('Password')
             br
-            input.js-get-focus( type='password', name='password', required )
+            input( type='password', name='password', required )
 
           p(style='text-align: right; margin-top: 15px')
             button.k-button(type='submit')=t('Login')

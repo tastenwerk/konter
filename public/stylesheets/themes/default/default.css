@@ -16,3 +16,5 @@ a{color:#333333;text-decoration:none;}
 .icon-bar{background:url('/stylesheets/themes/default/images/side-bar-transition.png') #444444;position:absolute;top:40px;left:0;width:60px;bottom:0;}.icon-bar a{width:60px;height:54px;display:block;padding:3px 0;border-bottom:1px solid rgba(255, 255, 255, 0.05);position:relative;background:transparent;}.icon-bar a .icon-large{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;right:3px;bottom:10px;opacity:0.5;}
 .icon-bar a .text{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;top:auto;bottom:5px;right:7px;font-size:9px;font-weight:100;text-transform:uppercase;color:#fff;opacity:0.5;text-align:center;}
 .icon-bar a:hover{background:rgba(0, 0, 0, 0.3);}.icon-bar a:hover .icon-large,.icon-bar a:hover .text{opacity:0.8;}
+.icon-bar a.active .icon-large,.icon-bar a.active .text{opacity:1;}
+.icon-bar a.active .icon-large{background-image:url('/stylesheets/3rdparty/glyphicons/glyphicons-orange.png');}

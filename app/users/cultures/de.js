@@ -15,7 +15,7 @@ Globalize.addCultureInfo( "de", {
     'required fields': 'Pflichtfeld. Muss ausgefüllt werden',
     'Initial setup completed successfully!': 'Ersteinrichtung erfolgreich abgeschlossen!',
     'Your session has expired': 'Ihre Sitzung ist abgelaufen',
-    'Please log in to continue': 'Zum fortsetzen ist eine Anmeldung erforderlich',
+    'Please log in to continue': 'Zum Fortsetzen ist eine Anmeldung erforderlich',
     'Log off': 'Abmelden',
     'My Profile': 'Mein Profil'
   }
