@@ -121,15 +121,15 @@ a{color:#333333;text-decoration:none;}
 .icon-bar a:hover{background:rgba(0, 0, 0, 0.3);}.icon-bar a:hover .icon-large,.icon-bar a:hover .text{opacity:0.8;}
 .icon-bar a.active .icon-large,.icon-bar a.active .text{opacity:1;}
 .icon-bar a.active .icon-large{background-image:url('/stylesheets/3rdparty/glyphicons/glyphicons-orange.png');}
-.login-container{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;box-shadow:0 0 20px rgba(0, 0, 0, 0.7);width:550px;height:240px;border:1px solid #aaaaaa;background:#ffffff;padding:20px;}.login-container input[type=text],.login-container input[type=password],.login-container button[type=submit]{width:100%;font-size:1em;padding:7px 0;text-indent:7px;}.login-container input[type=text].error,.login-container input[type=password].error,.login-container button[type=submit].error{border-color:#d00;}
+.login-container{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;box-shadow:0 0 20px rgba(0, 0, 0, 0.7);width:650px;height:240px;border:1px solid #aaaaaa;background:#ffffff;padding:20px;}.login-container input[type=text],.login-container input[type=password],.login-container button[type=submit]{width:100%;font-size:1em;padding:7px 0;text-indent:7px;}.login-container input[type=text].error,.login-container input[type=password].error,.login-container button[type=submit].error{border-color:#d00;}
 .login-container span.required-star{color:#d00;font-weight:600;}
 .login-container button[type=submit]{padding:5px;font-weight:600;}
 .login-container label{font-size:1em;color:#777777;}.login-container label.error{color:#d00;font-weight:600;}
-.login-container form{margin-top:35px;width:280px;}
+.login-container form{margin-top:35px;width:390px;}
 .login-container p{margin:5px 0;}
 .login-container .footer{position:absolute;bottom:5px;left:10px;right:10px;font-size:0.8em;}.login-container .footer a{color:#777777;}
-.login-flash{width:550px;height:20px;border:1px solid #aaaaaa;background:#ffffff;position:absolute;top:10px;left:0;right:0;margin:0 auto;padding:20px;font-size:1.2em;font-weight:600;text-align:center;}.login-flash.error{background:#d00;color:#fff;}
-.login-flash.notice{background:#9bf;}
+.login-flash{width:550px;height:20px;background:#ffffff;position:absolute;top:10px;left:0;right:0;margin:0 auto;padding:7px;font-size:1.2em;font-weight:600;text-align:center;color:#fff;}.login-flash.error{background:#c33;border:1px solid #a00;}
+.login-flash.notice{background:#59f;border:1px solid #38e;}
 .big-logo{text-align:right;margin:20px 20px 20px 50px;font-size:0.8em;}.big-logo h1,.big-logo h2{color:#666;font-weight:100;font-family:'Michroma';}
 .big-logo h1{font-size:20px;margin:5px 0 0;line-height:22px;}
 .big-logo h2{font-size:12px;margin:0;line-height:14px;}

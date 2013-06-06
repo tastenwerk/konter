@@ -9,7 +9,7 @@
 .login-container{
   .absolute-center;
   box-shadow: 0 0 20px rgba(0,0,0,0.7);
-  width: 550px;
+  width: 650px;
   height: 240px;
   border: @login-border;
   background: @login-bg;
@@ -46,7 +46,7 @@
 
   form{
     margin-top: 35px;
-    width: 280px;
+    width: 390px;
   }
 
   p{
@@ -69,23 +69,24 @@
 .login-flash{
   width: 550px;
   height: 20px;
-  border: @login-border;
   background: @login-bg;
   position: absolute;
   top: 10px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  padding: 20px;
+  padding: 7px;
   font-size: 1.2em;
   font-weight: 600;
   text-align: center;
+  color: #fff;
   &.error{
-    background: #d00;
-    color: #fff;
+    background: #c33;
+    border: 1px solid #a00;
   }
   &.notice{
-    background: #9bf;
+    background: #59f;
+    border: 1px solid #38e;
   }
 }
 

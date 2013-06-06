@@ -43,22 +43,9 @@ a{
   .full-overlay;
 }
 
-.main-sidebar{
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background-color: @tw-orange;
-  width: 50px;
-  box-shadow: 1px 0px 5px rgba(50,20,0,0.5);
-  &.wide{
-    width: 250px;
-  }
-}
-
 .konter-bar{
   background: url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;
-  height: 40px;
+  height: 60px;
   width: 100%;
   .logo{
     background: url('/images/logo-box.png');
@@ -70,33 +57,56 @@ a{
   }
   .account-info-container{
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 8px;
+    right: 8px;
     border: 1px solid rgba(0,0,0,0.12);
     background: url('/stylesheets/themes/default/images/account-info-transition.png');
     border-radius: 1px;
-    min-width: 200px;
-    height: 30px;
+    min-width: 100px;
+    height: 44px;
     display: inline-block;
     .account-picture{
       background: url('/images/user_256x256.png');
       background-size: cover;
-      width: 24px;
-      height: 24px;
+      width: 36px;
+      height: 36px;
       border-radius: 1px;
-      margin: 3px;
+      margin: 4px;
       display: inline-block;
       float: left;
     }
     .actions{
       display: inline-block;
-      margin: 6px 5px;
+      margin: 12px 5px;
+    }
+    .vertical-user-actions-stack{
+      float: left;
+      width: 20px;
+      margin-top: -10px;
+      margin-left: 10px;
+      border-left: 1px solid rgba(0,0,0,0.2);
+      padding: 0 4px;
+      a{
+        border: none;
+        margin-bottom: 2px;
+        line-height:16px;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        padding: 0 5px 3px 5px;
+        &:last-child{
+          border: none;
+          margin: -1px 0 0 0;
+          padding: 0 5px;
+        }
+      }
     }
     a{
       float: left;
       font-size: 0.9em;
       opacity: 0.6;
-      margin-right: 5px;
+      &.name{
+        font-weight: 600;
+        font-size: 1.1em;
+      }
       .icon{
         margin-right: 1px;
         float: left;
@@ -112,7 +122,7 @@ a{
 .icon-bar{
   background: url('/stylesheets/themes/default/images/side-bar-transition.png') #444;
   position: absolute;
-  top: 40px;
+  top: 60px;
   left: 0;
   width: 60px;
   bottom: 0;

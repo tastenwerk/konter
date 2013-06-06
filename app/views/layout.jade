@@ -12,13 +12,14 @@ html
         .logo
         .account-info-container
           .account-picture
-          .actions
-            a(href='#')
-              i.icon.icon-user
-              span=t('My Profile')
-            a(href='/logout')
-              i.icon.icon-off
-              span=t('Log off')
+          .actions.account-actions
+            a.xhr-link.name(href='/users/#{currentUser._id}')
+              =currentUser.name.full
+            .vertical-user-actions-stack
+              a(href='#', title=t('My Profile'))
+                i.icon.icon-edit
+              a(href='/logout', title=t('Log off'))
+                i.icon.icon-off
 
       .icon-bar
         a(href='#')

@@ -17,6 +17,7 @@ Globalize.addCultureInfo( "de", {
     'Your session has expired': 'Ihre Sitzung ist abgelaufen',
     'Please log in to continue': 'Zum Fortsetzen ist eine Anmeldung erforderlich',
     'Log off': 'Abmelden',
-    'My Profile': 'Mein Profil'
+    'My Profile': 'Mein Profil',
+    'You have been logged off successfully!': 'Erfolgreich abgemeldet!'
   }
 });
