@@ -37,6 +37,14 @@ var environment_js = [
 "konter.config.site.title = '__appName__';",
 "konter.config.site.domain = 'localhost.site';",
 "",
+"konter.config.mailer.from = 'TASTENbOX automailer <automailer@tastenbox.com>';",
+"",
+"konter.config.mailer.host = 'localhost.site';",
+"konter.config.mailer.port = 465;",
+"konter.config.mailer.auth.user = 'automailer@tastenbox.com';",
+"konter.config.mailer.auth.pass = '1234567890';",
+"konter.config.mailer.secureConnection = true;",
+"",
 "konter.config.log.level = 3; // 3 ... verbose, 0 ... errors only"
 ].join(eol);
 

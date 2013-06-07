@@ -17,6 +17,11 @@ module.exports = function authRoutes( app, socket ){
   app.get( '/login', renderGetLogin );
   app.post( '/login', konter.plugins.auth.login, renderPostLogin );
 
+  app.get( '/logout', renderLogout );
+
+  app.get( '/forgot_password', renderGetForgotPassword );
+  app.post( '/forgot_password', renderPostForgotPassword );
+
   app.get( '/initial-setup', renderGetInitialSetup );
   app.post( '/initial-setup', renderPostInitialSetup );
 
@@ -32,6 +37,85 @@ module.exports = function authRoutes( app, socket ){
 function renderGetLogin( req, res ){
   res.locals.flash = req.flash();
   res.render( konter.views.get('auth/login.jade') );
+}
+
+/**
+ * GET /logout
+ *
+ * render logout
+ *
+ * @api public
+ */
+function renderLogout( req, res ){
+  req.session.userId = null;
+  req.session.userIp = null;
+  req.flash('notice', res.t('You have been logged off successfully!'));
+  res.locals.flash = req.flash();
+  res.render( konter.views.get('/auth/login.jade'))
+}
+
+/**
+ * GET /forgot_password
+ *
+ * render forgotten password view
+ *
+ * @api public
+ */
+function renderGetForgotPassword( req, res ){
+  res.locals.flash = {}
+  res.render( konter.views.get('auth/forgot_password.jade') );
+}
+
+/**
+ * POST /forgot_password
+ *
+ * posts an email address.
+ *
+ * the given address will be validated. If it exists in the system,
+ * a link will be sent to the user account
+ *
+ * @api public
+ */
+function renderPostForgotPassword( req, res ){
+
+  var crypto = require('crypto');
+
+  var confirmationKey = crypto.createHash('sha1').update((new Date()).toString(32)).digest('hex');
+
+  konter.db.models.User.findOne( {email: req.body.email}, function( err, user ){
+    if( user ){
+      user.update({ confirmation: { key: confirmationKey,
+                                    expires: moment().add('d',3).toDate(),
+                                    ipAddr: konter.plugins.auth.getRemoteIP( req ),
+                                    tries: 3 } }, function( err ){
+        if( err ){
+          req.flash('error', err);
+          console.log(err);
+          res.render( konter.views.get( 'auth/forgot_password.jade' ), { flash: req.flash() } );
+        } else {
+          konter.plugins.mailer.deliver({ 
+            to: req.body.email,
+            subject: '['+konter.config.site.title+'] '+res.locals.t('Password reset request'),
+            text: req.i18n.t('You (or somebody else) has requested to reset your password. If this was not your intention, you can ignore this email (respectively report an abuse) - your password will remain untouched. If you whish to continue, please click on the link below.') +
+                  "http://" + konter.config.site.domain + "/users/"+ user._id + "/reset_password?key=" + confirmationKey +
+                  res.locals.t('bye', {site: konter.config.site.title})
+            },
+            function( err, response ){
+              if( err ){
+                console.log( err );
+                req.flash('error', err);
+              } else
+                req.flash('notice', res.locals.t('Password reset request has been sent!'));
+              res.render( konter.views.get( 'auth/login.jade' ), { flash: req.flash() } );
+          });
+        }
+
+      });
+    } else {
+      req.flash('error', res.locals.t('Email unknown') );
+      res.render( konter.views.get( 'auth/forgot_password.jade' ), { flash: req.flash() } );
+    }
+  });
 }
 
 /**

@@ -48,7 +48,8 @@ var UserSchema = db.Schema({
   confirmation: {
     key: String,
     expires: Date,
-    tries: Number
+    tries: Number,
+    ipAddr: String
   },
   _createdAt: { type: Date, default: Date.now },
   suspended: { type: Boolean, default: false }

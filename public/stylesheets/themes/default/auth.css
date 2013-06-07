@@ -110,13 +110,14 @@ a{color:#333333;text-decoration:none;}
 .pull-right{float:right;}
 .pull-left{float:left;}
 .main-container{background-color:#ffc200;position:absolute;height:100%;width:100%;}
-.main-sidebar{position:absolute;top:0;left:0;bottom:0;background-color:#ffc200;width:50px;box-shadow:1px 0px 5px rgba(50, 20, 0, 0.5);}.main-sidebar.wide{width:250px;}
-.konter-bar{background:url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;height:40px;width:100%;}.konter-bar .logo{background:url('/images/logo-box.png');width:71px;height:24px;position:absolute;top:8px;left:12px;}
-.konter-bar .account-info-container{position:absolute;top:4px;right:4px;border:1px solid rgba(0, 0, 0, 0.12);background:url('/stylesheets/themes/default/images/account-info-transition.png');border-radius:1px;min-width:200px;height:30px;display:inline-block;}.konter-bar .account-info-container .account-picture{background:url('/images/user_256x256.png');background-size:cover;width:24px;height:24px;border-radius:1px;margin:3px;display:inline-block;float:left;}
-.konter-bar .account-info-container .actions{display:inline-block;margin:6px 5px;}
-.konter-bar .account-info-container a{float:left;font-size:0.9em;opacity:0.6;margin-right:5px;}.konter-bar .account-info-container a .icon{margin-right:1px;float:left;margin-top:3px;}
+.konter-bar{background:url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;height:60px;width:100%;}.konter-bar .logo{background:url('/images/logo-box.png');width:71px;height:24px;position:absolute;top:8px;left:12px;}
+.konter-bar .account-info-container{position:absolute;top:8px;right:8px;border:1px solid rgba(0, 0, 0, 0.12);background:url('/stylesheets/themes/default/images/account-info-transition.png');border-radius:1px;min-width:100px;height:44px;display:inline-block;}.konter-bar .account-info-container .account-picture{background:url('/images/user_256x256.png');background-size:cover;width:36px;height:36px;border-radius:1px;margin:4px;display:inline-block;float:left;}
+.konter-bar .account-info-container .actions{display:inline-block;margin:12px 5px;}
+.konter-bar .account-info-container .vertical-user-actions-stack{float:left;width:20px;margin-top:-10px;margin-left:10px;border-left:1px solid rgba(0, 0, 0, 0.2);padding:0 4px;}.konter-bar .account-info-container .vertical-user-actions-stack a{border:none;margin-bottom:2px;line-height:16px;border-bottom:1px solid rgba(0, 0, 0, 0.2);padding:0 5px 3px 5px;}.konter-bar .account-info-container .vertical-user-actions-stack a:last-child{border:none;margin:-1px 0 0 0;padding:0 5px;}
+.konter-bar .account-info-container a{float:left;font-size:0.9em;opacity:0.6;}.konter-bar .account-info-container a.name{font-weight:600;font-size:1.1em;}
+.konter-bar .account-info-container a .icon{margin-right:1px;float:left;margin-top:3px;}
 .konter-bar .account-info-container a:hover{opacity:1;}
-.icon-bar{background:url('/stylesheets/themes/default/images/side-bar-transition.png') #444444;position:absolute;top:40px;left:0;width:60px;bottom:0;}.icon-bar a{width:60px;height:54px;display:block;padding:3px 0;border-bottom:1px solid rgba(255, 255, 255, 0.05);position:relative;background:transparent;}.icon-bar a .icon-large{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;right:3px;bottom:10px;opacity:0.5;}
+.icon-bar{background:url('/stylesheets/themes/default/images/side-bar-transition.png') #444444;position:absolute;top:60px;left:0;width:60px;bottom:0;}.icon-bar a{width:60px;height:54px;display:block;padding:3px 0;border-bottom:1px solid rgba(255, 255, 255, 0.05);position:relative;background:transparent;}.icon-bar a .icon-large{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;right:3px;bottom:10px;opacity:0.5;}
 .icon-bar a .text{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;top:auto;bottom:5px;right:7px;font-size:9px;font-weight:100;text-transform:uppercase;color:#fff;opacity:0.5;text-align:center;}
 .icon-bar a:hover{background:rgba(0, 0, 0, 0.3);}.icon-bar a:hover .icon-large,.icon-bar a:hover .text{opacity:0.8;}
 .icon-bar a.active .icon-large,.icon-bar a.active .text{opacity:1;}

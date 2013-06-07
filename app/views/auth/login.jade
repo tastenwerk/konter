@@ -6,7 +6,6 @@ html
     script(type='text/javascript', src='/javascripts/konter.auth.js')
 
   body
-    input( type='hidden', id='_csrf', value=_csrf )
 
     .main-container
 
@@ -45,4 +44,4 @@ html
           |&nbsp;|&nbsp;
           a( href='/forgot_password' )=t('Forgot password')
           |&nbsp;|&nbsp;
-          a( href='/forgot_password' )=t('Back to Frontpage')
+          a( href='/' )=t('Back to Frontpage')
