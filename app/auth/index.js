@@ -49,7 +49,7 @@ function renderGetLogin( req, res ){
 function renderLogout( req, res ){
   req.session.userId = null;
   req.session.userIp = null;
-  req.flash('notice', res.t('You have been logged off successfully!'));
+  req.flash('notice', res.locals.t('You have been logged off successfully!'));
   res.locals.flash = req.flash();
   res.render( konter.views.get('/auth/login.jade'))
 }

@@ -32,5 +32,6 @@ function redirectToDashboard( req, res ){
 }
 
 function renderGetDashboard( req, res ){
+  res.locals.dashboardPlugins = konter.dashboard.plugins;
   res.render( konter.views.get('/dashboard/index.jade') );
 }

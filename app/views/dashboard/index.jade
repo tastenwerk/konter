@@ -2,4 +2,8 @@ extends ../layout
 
 block content
 
-  h1 dashboard
+  .main-wrapper
+    each dashboardPlugin in dashboardPlugins
+      .dashboard-item
+        h1= dashboardPlugin.name
+

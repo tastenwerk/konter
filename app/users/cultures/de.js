@@ -17,6 +17,7 @@ Globalize.addCultureInfo( "de", {
     'Your session has expired': 'Ihre Sitzung ist abgelaufen',
     'Please log in to continue': 'Zum Fortsetzen ist eine Anmeldung erforderlich',
     'Log off': 'Abmelden',
+    'Back to Login': 'Zurück zum Login',
     'My Profile': 'Mein Profil',
     'You have been logged off successfully!': 'Erfolgreich abgemeldet!',
     'Please enter your email address in order to get a link sent where you can reset your old password!': 'Sie können Ihr Passwort zurücksetzen, indem Sie Ihre Email Adresse angeben. Anschließend wird ein Link an diese Adresse versandt mit weiteren Informationen.',
@@ -28,7 +29,7 @@ Globalize.addCultureInfo( "de", {
         'zero': 'Kein Versuch mehr möglich'
     },
     'Password reset request has been sent!': 'Passwort-Rücksetzen-Aufforderung wurde versandt',
-    'Forgot Password?': 'Passwort vergessen?',
+    'Forgot Password': 'Passwort vergessen',
     'Send link': 'Link zum Zurücksetzen zusenden'
   }
 });
