@@ -1,6 +1,7 @@
 !!! 5
 html
   head
+    meta( http-equiv='Content-Type', content='text/html', charset='utf-8' )
     block header
       include _header
 
@@ -30,4 +31,6 @@ html
           span.text=t('Tasks')
 
       input( type='hidden', id='_csrf', value=_csrf )
-      block content
+
+      .content-wrapper
+        block content

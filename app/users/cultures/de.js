@@ -30,6 +30,11 @@ Globalize.addCultureInfo( "de", {
     },
     'Password reset request has been sent!': 'Passwort-Rücksetzen-Aufforderung wurde versandt',
     'Forgot Password': 'Passwort vergessen',
-    'Send link': 'Link zum Zurücksetzen zusenden'
+    'Send link': 'Link zum Zurücksetzen zusenden',
+    'as at': 'Stand:',
+    'Online': 'Online',
+    'Total': 'Gesamt',
+    'New': 'Neu',
+    'User statistics': 'Benutzerstatistik'
   }
 });

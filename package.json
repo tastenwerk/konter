@@ -37,7 +37,7 @@
     "nodemailer": "0.4.x",
     "string": "1.1.0",
     "async": "0.2.8",
-    "less-middleware": "0.1.11",
+    "less-middleware": "0.1.12",
     "globalize": "0.1.1"
   },
   "devDependencies": {

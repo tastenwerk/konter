@@ -10,18 +10,6 @@
  *
  */
 
-/**
- * konter
- *
- * a rock solid and small content repository and web framework
- * for complex web projects
- *
- * Copyright 2013 by TASTENWERK
- *
- * License: GPLv3
- *
- */
-
 var db = require( __dirname + '/../../../lib/db' )
   , UserACLSchema = require( __dirname+'/../../users/models/user_acl_schema' )
 

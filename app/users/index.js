@@ -13,6 +13,7 @@
 var konter = require( __dirname+'/../../lib/konter' );
 
 konter.dashboard.plugins.push( require(__dirname+'/dashboard-plugins/online-users') );
+konter.cron.jobs.push( require(__dirname+'/cron.update-user-stats') );
 
 module.exports = function userRoutes( app, socket ){
 

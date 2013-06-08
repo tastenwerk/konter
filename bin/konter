@@ -120,6 +120,21 @@ program
     console.log();
   });
 
+program
+  .command('cron')
+  .description('run cronjobs in current konter application (must be a valid application configuration)')
+  .action( function runCronjobs(){
+    if( !fs.existsSync( process.cwd()+'/config/environment.js' ) )
+      return console.log('    \033[31merror\033[0m: working directory does not seem to be a valid konter instance');
+    var konter = require('konter');
+    konter.server.start({ envOnly: true });
+    konter.cron.run( function( err ){
+      konter.db.disconnect();
+      if( err ) return console.log('    \033[31merror\033[0m: some jobs failed!');
+      return console.log('\n\n   \x1b[32msuccess\x1b[0m All jobs completed successfully!');
+    });
+  });
+
 program.parse(process.argv);
 
 /**
