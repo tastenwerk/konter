@@ -52,11 +52,11 @@ function processNextDashboardPlugin( renderedPlugins, plugins, res, callback ){
   var plugin = plugins[ renderedPlugins.length ];
   if( plugin.before && plugin.before.render )
     plugin.before.render( res.locals, function( locals ){
-      renderedPlugins.push( jade.compile( fs.readFileSync(plugin.tmplAbsPath), { filename: plugin.tmplAbsPath } )( locals ) );
+      renderedPlugins.push( jade.compile( fs.readFileSync(plugin.tmplAbsPath), { filename: plugin.tmplAbsPath, pretty: false } )( locals ) );
       processNextDashboardPlugin( renderedPlugins, plugins, res, callback );
     });
   else{
-    renderedPlugins.push( jade.compile( fs.readFileSync(plugin.tmplAbsPath), { filename: plugin.tmplAbsPath } )( locals ) );
+    renderedPlugins.push( jade.compile( fs.readFileSync(plugin.tmplAbsPath), { filename: plugin.tmplAbsPath, pretty: false } )( res.locals ) );
     processNextDashboardPlugin( renderedPlugins, plugins, res, callback );
   }
 }

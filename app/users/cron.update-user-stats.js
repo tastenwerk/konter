@@ -24,9 +24,11 @@ var konter = require( __dirname+'/../../lib/konter' );
  * @api private
  */
 var cronJob = module.exports = function updateUserStats( done ){
-  var conditions = { 
-    $gte: { date: moment().subtract('d',1).startOf('day').toDate() }, 
-    $lte: { date: moment().startOf('day').toDate() }
+  var conditions = {
+    $and: [ 
+      { date: { $gte: moment().subtract('h',24).startOf('day').toDate() } },
+      { date: { $lte: moment().startOf('day').toDate() } }
+    ]
   }
   konter.db.models.UserStat.findOne(conditions, function( err, userStat ){
     if( err ) return done( err );
@@ -35,7 +37,7 @@ var cronJob = module.exports = function updateUserStats( done ){
     var usersOnline, usersRegistered;
 
     conditions = {
-      $gte: { 'lastRequest.createdAt': moment().subtract('d', 1).startOf('day').toDate() }
+      'lastRequest.createdAt': { $gte: moment().subtract('h', 24).startOf('day').toDate() }
     };
 
     konter.db.models.User.find( conditions, function( err, users ){
@@ -43,7 +45,7 @@ var cronJob = module.exports = function updateUserStats( done ){
       usersOnline = users;
 
       conditions = {
-        $gte: { _createdAt: moment().subtract('d', 1).startOf('day').toDate() }
+        _createdAt: { $gte: moment().subtract('h', 24).startOf('day').toDate() }
       };
 
       konter.db.models.User.find( conditions, function( err, users ){

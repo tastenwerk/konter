@@ -6,9 +6,12 @@
     #online-users-chart( style='width: 100%; height: 150px')
 
     script(type='text/javascript')
-      var d = !{JSON.stringify(users.map( function( user ){ return [user.lastRequest.createdAt.getTime()})   [[moment().subtract('d',2).toDate().getTime(), 2], [moment().subtract('d', 1).toDate().getTime(), 15], [moment().toDate().getTime(), 22]];
-      for (var i = 0; i < d.length; ++i) 
-        d[i][0] += 60 * 60 * 1000;
+      var online = !{JSON.stringify(onlineUserStat)};
+      var registered = !{JSON.stringify(registeredUserStat)};
+      for (var i = 0; i < online.length; ++i) 
+        online[i][0] += 60 * 60 * 1000;
+      for (var i = 0; i < registered.length; ++i) 
+        registered[i][0] += 60 * 60 * 1000;
       var options = {
         series: {
           lines: {
@@ -20,7 +23,8 @@
         },
         xaxis: {
           mode: "time",
-          tickLength: 5
+          timeformat: "%d. %b.",
+          minTickSize: [1, "day"]
         },
         selection: {
           mode: "x"
@@ -32,7 +36,7 @@
         }
       };
 
-      $.plot("#online-users-chart", [d], options );
+      $.plot("#online-users-chart", [{ data: online, label: 'Online'}], options );
       
       $('#online-users-chart').on('plothover', function (event, pos, item) {
         if( !item ) return $('.chart-tooltip').remove();
