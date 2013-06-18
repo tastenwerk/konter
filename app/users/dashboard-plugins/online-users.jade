@@ -6,10 +6,11 @@
     #online-users-chart( style='width: 100%; height: 150px')
 
     script(type='text/javascript')
+      var total = !{JSON.stringify(totalUsers)};
       var online = !{JSON.stringify(onlineUserStat)};
       var registered = !{JSON.stringify(registeredUserStat)};
-      for (var i = 0; i < online.length; ++i) 
-        online[i][0] += 60 * 60 * 1000;
+      //for (var i = 0; i < online.length; ++i) 
+      //  online[i][0] += 60 * 60 * 1000;
       for (var i = 0; i < registered.length; ++i) 
         registered[i][0] += 60 * 60 * 1000;
       var options = {
@@ -24,7 +25,13 @@
         xaxis: {
           mode: "time",
           timeformat: "%d. %b.",
-          minTickSize: [1, "day"]
+          minTickSize: [1, "day"],
+          min: moment().subtract('d',7).toDate().getTime(),
+          max: moment().toDate().getTime()
+        },
+        yaxis: {
+          min: 0,
+          tickDecimals: 0
         },
         selection: {
           mode: "x"
@@ -36,11 +43,10 @@
         }
       };
 
-      $.plot("#online-users-chart", [{ data: online, label: 'Online'}], options );
+      $.plot("#online-users-chart", [{ data: online, label: konter.t('Online')}, { data: registered, label: konter.t('Registered')}, { data: total, label: konter.t('Total')}], options );
       
       $('#online-users-chart').on('plothover', function (event, pos, item) {
         if( !item ) return $('.chart-tooltip').remove();
-        console.log(item);
         showTooltip( item.pageX, item.pageY, item.datapoint[1] );
       });
 

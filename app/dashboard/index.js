@@ -11,6 +11,7 @@
  */
  
 var jade = require('jade')
+  , Globalize = require('globalize')
   , fs = require('fs');
 
 var konter = require( __dirname+'/../../lib/konter' );
@@ -20,6 +21,8 @@ module.exports = function dashboardRoutes( app, socket ){
   app.get( '/', redirectToDashboard );
 
   app.get( '/dashboard', konter.plugins.auth.check, renderGetDashboard );
+
+  app.get( '/cultures/:culture', renderGetCultures );
 
 }
 
@@ -59,4 +62,12 @@ function processNextDashboardPlugin( renderedPlugins, plugins, res, callback ){
     renderedPlugins.push( jade.compile( fs.readFileSync(plugin.tmplAbsPath), { filename: plugin.tmplAbsPath, pretty: false } )( res.locals ) );
     processNextDashboardPlugin( renderedPlugins, plugins, res, callback );
   }
+}
+
+function renderGetCultures( req, res ){
+  var culture = req.params.culture.replace('.js','');
+  var s = 'moment.lang("'+culture+'");\n';
+  s+='Globalize.addCultureInfo("'+culture+'", '+JSON.stringify(Globalize.culture( culture ))+');';
+  s+='konter.t = function( str ){ var trans = Globalize.localize( str, "'+culture+'"); return trans || str; }';
+  res.send( s );
 }

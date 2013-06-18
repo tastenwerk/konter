@@ -17,13 +17,13 @@ html
             a.xhr-link.name(href='/users/#{currentUser._id}')
               =currentUser.name.full
             .vertical-user-actions-stack
-              a(href='#', title=t('My Profile'))
-                i.icon.icon-edit
+              a.xhr-link(href='/users/#{currentUser._id}', title=t('My Profile'))
+                i.icon.icon-edit.icon-white
               a(href='/logout', title=t('Log off'))
-                i.icon.icon-off
+                i.icon.icon-off.icon-white
 
       .icon-bar
-        a(href='#')
+        a.active(href='#')
           i.icon-large.white.icon-home
           span.text=t('Home')
         a(href='#')
@@ -32,5 +32,7 @@ html
 
       input( type='hidden', id='_csrf', value=_csrf )
 
-      .content-wrapper
+      .content-wrapper-arrow-left
+      #content-wrapper.content-wrapper
+        
         block content

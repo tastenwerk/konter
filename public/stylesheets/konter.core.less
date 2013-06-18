@@ -23,6 +23,7 @@ body{
   .full-overlay;
   font-family: @font-family;
   font-size: @font-size;
+  background: #222;
 }
 
 input[type=text], input[type=password], textarea{
@@ -44,23 +45,23 @@ a{
 }
 
 .konter-bar{
-  background: url('/stylesheets/themes/default/images/bg-transition.png') #ffc200;
+  background: #222;
   height: 60px;
   width: 100%;
   .logo{
     background: url('/images/logo-box.png');
     width: 71px;
-    height: 24px;
+    height: 26px;
     position: absolute;
-    top: 8px;
+    top: 15px;
     left: 12px;
   }
   .account-info-container{
     position: absolute;
     top: 8px;
     right: 8px;
-    border: 1px solid rgba(0,0,0,0.12);
-    background: url('/stylesheets/themes/default/images/account-info-transition.png');
+    border: 1px solid rgba(255,255,255,0.22);
+    background: #555;
     border-radius: 1px;
     min-width: 100px;
     height: 44px;
@@ -84,13 +85,13 @@ a{
       width: 20px;
       margin-top: -10px;
       margin-left: 10px;
-      border-left: 1px solid rgba(0,0,0,0.2);
+      border-left: 1px solid rgba(255,255,255,0.2);
       padding: 0 4px;
       a{
         border: none;
         margin-bottom: 2px;
         line-height:16px;
-        border-bottom: 1px solid rgba(0,0,0,0.2);
+        border-bottom: 1px solid rgba(255,255,255,0.4);
         padding: 0 5px 3px 5px;
         &:last-child{
           border: none;
@@ -106,6 +107,7 @@ a{
       &.name{
         font-weight: 600;
         font-size: 1.1em;
+        color: #fff;
       }
       .icon{
         margin-right: 1px;
@@ -120,7 +122,7 @@ a{
 }
 
 .icon-bar{
-  background: url('/stylesheets/themes/default/images/side-bar-transition.png') #444;
+  background: #222;
   position: absolute;
   top: 60px;
   left: 0;
@@ -158,20 +160,29 @@ a{
     }
     &.active{
       .icon-large, .text{ opacity: 1; }
-      .icon-large{ background-image: url('/stylesheets/3rdparty/glyphicons/glyphicons-orange.png') }
+      .icon-large{ background-image: url('/stylesheets/3rdparty/glyphicons/glyphicons-blue.png') }
     }
   }
 }
 
 .content-wrapper{
   position: absolute;
-  top: 65px;
-  left: 65px;
+  top: 60px;
+  left: 60px;
   right: 0;
   bottom: 0;
-  background: @default-gradient;
-  box-shadow: -3px -3px 10px #333;
+  background: #f0f0f0;
   z-index: 2;
+}
+.content-wrapper-arrow-left{
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right: 10px solid #f0f0f0; 
+  position: absolute;
+  top: 75px;
+  left: 50px;
 }
 
 .dashboard-plugin{
@@ -186,10 +197,10 @@ a{
 }
 
 .dashboard-plugin-header{
-  background-color: #aaa;
   padding: 5px;
   font-size: 0.9em;
   color: #222;
+  border-bottom: 1px solid #ccc;
 }
 
 .dashboard-plugin-body{

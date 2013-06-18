@@ -35,6 +35,10 @@ Globalize.addCultureInfo( "de", {
     'Online': 'Online',
     'Total': 'Gesamt',
     'New': 'Neu',
-    'User statistics': 'Benutzerstatistik'
+    'User statistics': 'Benutzerstatistik',
+    'Online': 'Online',
+    'Register': 'Registrieren',
+    'Registered': 'Neuregistrierungen',
+    'Total': 'Gesamt'
   }
 });

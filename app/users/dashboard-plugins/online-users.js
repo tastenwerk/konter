@@ -12,6 +12,8 @@
 
 var path = require('path')
   , moment = require('moment')
+  , async = require('async');
+
 var konter = require( __dirname+'/../../../lib/konter' );
 
 var plugin = module.exports = {};
@@ -22,12 +24,17 @@ plugin.tmplAbsPath = path.join( __dirname+'/online-users.jade' );
 
 plugin.before = {};
 plugin.before.render = function beforeRenderGetOnlineUsers( locals, done ){
-  konter.db.models.UserStat.find().gte('date', moment().subtract('d',7).toDate()).sort({ date: 1 }).exec( function( err, userstats ){
-    if( err ) konter.logger.error('trying to fetch online users', require('util').inspect(err));
-    locals.onlineUserStat = userstats.map( function mapOnlineUsers( userstat ){ return [ moment(userstat.date).toDate(), userstat.online ] } );
-    locals.registeredUserStat = userstats.map( function mapRegisteredUsers( userstat ){ return [ moment(userstat.date).toDate().getTime(), userstat.registered ] } );
-    console.log(locals.onlineUserStat);
-    done( locals );
-  })
+
+  async.series([
+    function( next ){
+      konter.db.models.UserStat.find().gte('date', moment().subtract('d',7).toDate()).sort({ date: 1 }).exec( next );
+    }
+  ], function( err, results ){
+      if( err ) konter.logger.error('trying to fetch online users', require('util').inspect(err));
+      locals.onlineUserStat = results[0].map( function mapOnlineUsers( userstat ){ return [ userstat.date.getTime(), userstat.online.length ] } );
+      locals.registeredUserStat = results[0].map( function mapRegisteredUsers( userstat ){ return [ userstat.date.getTime(), userstat.registered.length ] } );
+      locals.totalUsers = results[0].map( function mapTotalUsers( userstat ){ return [userstat.date.getTime(), userstat.total ]} );
+      done( locals );
+  });
 }
 

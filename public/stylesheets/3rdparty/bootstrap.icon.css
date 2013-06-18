@@ -37,6 +37,10 @@
   background-repeat: no-repeat;
 }
 
+.icon.icon-white{
+  background-image: url("glyphicons/glyphicons-halflings-white.png");
+}
+
 .icon-glass {
   background-position: 0      0;
 }

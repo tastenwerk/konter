@@ -23,25 +23,20 @@ html
           input( type='hidden', name='_csrf', value=_csrf )
 
           p
-            label
-              =t('Username or Email')
-            br
-            input.js-get-focus( type='text', name='email', required )
+            input.js-get-focus( type='text', name='email', required, placeholder=t('Username or Email'), autocomplete=false )
           p
-            label
-              =t('Password')
-            br
-            input( type='password', name='password', required )
+            input( type='password', name='password', required, placeholder=t('Password') )
 
-          p(style='text-align: right; margin-top: 15px')
+          p( style='margin-top: 5px')
             button.ui-button(type='submit')=t('Login')
 
         p.footer
-          span.pull-right
-            !=t('TASTENBOX is a service by TASTENWERK')+' &copy;'
-            =moment().format('YYYY')
           a( href='/register')=t('Register')
           |&nbsp;|&nbsp;
           a( href='/forgot_password' )=t('Forgot Password')
           |&nbsp;|&nbsp;
           a( href='/' )=t('Back to Frontpage')
+
+      p.lower-footer
+        !=t('TASTENBOX is a service by TASTENWERK')+' &copy;'
+        =moment().format('YYYY')
