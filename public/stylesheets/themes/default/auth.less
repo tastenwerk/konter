@@ -5,17 +5,17 @@
 @login-border: 1px solid #aaa;
 
 .main-container{
-  background-color: #ffc23b;
+  background-color: #000;
 }
 
 .login-container{
   .absolute-center;
   width: 400px;
   height: 400px;
-  background-image: url('/images/login_bg.png');
-  color: #333;
+  background-image: url('/stylesheets/themes/default/images/login-transition.png');
+  color: #fff;
   padding: 50px;
-  
+
   input[type=text], input[type=password], button[type=submit]{
     width: 100%;
     font-size: 1em;
@@ -71,8 +71,14 @@
   }
 
   form{
-    margin-top: 230px;
+    margin-top: 190px;
     width: 300px;
+    h1{
+      font-size: 1.5em;
+      margin-bottom: 0.2em;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 0.5em;
+    }
   }
 
   p{
@@ -83,7 +89,7 @@
     margin-top: 5px;
     font-size: 0.8em;
     a{
-      color: #333;
+      color: #ddd;
     }
   }
 
@@ -93,20 +99,19 @@
   position: absolute;
   bottom: 10px;
   right: 30px;
-  color: #333;
+  color: #eee;
   font-size: 0.8em;
 }
 
 .login-flash{
-  width: 550px;
   height: 20px;
   background: @login-bg;
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
-  padding: 7px;
+  padding: 14px;
   font-size: 1.2em;
   font-weight: 600;
   text-align: center;
@@ -123,10 +128,10 @@
 
 .big-logo{
   text-align: right;
-  margin: 50px 100px 20px 50px;
+  margin: -40px 120px 0px 50px;
   font-size: 0.8em;
   h1, h2{
-    color: #666;
+    color: #bbb;
     font-weight: 100;
     font-family: 'Michroma';
   }

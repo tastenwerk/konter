@@ -18,18 +18,19 @@ html
       .login-container( style='height: 460px' )
 
         .big-logo.pull-right
-          img( src='/images/logo.png' )
+          img( src='/images/logo_white.png' )
           h1 TASTENBOX
           h2 collaboration back office
-
-          p( style='margin-top: 2em' )
-            span.required-star *
-            =t('required fields')
-              
+        
         form( action='/initial-setup', method='post' )
           input( type='hidden', name='_csrf', value=_csrf )
 
           h1=t('Welcome aboard!')
+
+          p
+            span.required-star *
+            =t('required fields')
+      
           p.desc!=t('No User accounts have been found on this configuration instance. We assume, this is your first run. Please choose a superuser name, email and password')
           p
             label
@@ -50,6 +51,11 @@ html
 
           p(style='text-align: right; margin-top: 15px')
             button.ui-button(type='submit')=t('Create')
+
+      p.lower-footer
+        !=t('TASTENBOX is a service by TASTENWERK')+' &copy;'
+        =moment().format('YYYY')
+
 
       script
         $(function(){

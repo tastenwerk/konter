@@ -8,10 +8,10 @@ a{color:#333333;text-decoration:none;}
 .pull-left{float:left;}
 .main-container{background-color:#f5f5f5;position:absolute;height:100%;width:100%;}
 .konter-bar{background:#222;height:60px;width:100%;}.konter-bar .logo{background:url('/images/logo-box.png');width:71px;height:26px;position:absolute;top:15px;left:12px;}
-.konter-bar .account-info-container{position:absolute;top:8px;right:8px;border:1px solid rgba(255, 255, 255, 0.22);background:#555;border-radius:1px;min-width:100px;height:44px;display:inline-block;}.konter-bar .account-info-container .account-picture{background:url('/images/user_256x256.png');background-size:cover;width:36px;height:36px;border-radius:1px;margin:4px;display:inline-block;float:left;}
+.konter-bar .account-info-container{position:absolute;top:8px;right:8px;background:#eee;border-radius:1px;min-width:100px;height:44px;display:inline-block;}.konter-bar .account-info-container .account-picture{background:url('/images/user_256x256.png');background-size:cover;width:36px;height:36px;border-radius:1px;margin:4px;display:inline-block;float:left;}
 .konter-bar .account-info-container .actions{display:inline-block;margin:12px 5px;}
-.konter-bar .account-info-container .vertical-user-actions-stack{float:left;width:20px;margin-top:-10px;margin-left:10px;border-left:1px solid rgba(255, 255, 255, 0.2);padding:0 4px;}.konter-bar .account-info-container .vertical-user-actions-stack a{border:none;margin-bottom:2px;line-height:16px;border-bottom:1px solid rgba(255, 255, 255, 0.4);padding:0 5px 3px 5px;}.konter-bar .account-info-container .vertical-user-actions-stack a:last-child{border:none;margin:-1px 0 0 0;padding:0 5px;}
-.konter-bar .account-info-container a{float:left;font-size:0.9em;opacity:0.6;}.konter-bar .account-info-container a.name{font-weight:600;font-size:1.1em;color:#fff;}
+.konter-bar .account-info-container .vertical-user-actions-stack{float:left;width:20px;margin-top:-10px;margin-left:10px;border-left:1px solid #777;padding:0 4px;}.konter-bar .account-info-container .vertical-user-actions-stack a{border:none;margin-bottom:2px;line-height:16px;border-bottom:1px solid #777;padding:0 5px 3px 5px;}.konter-bar .account-info-container .vertical-user-actions-stack a:last-child{border:none;margin:-1px 0 0 0;padding:0 5px;}
+.konter-bar .account-info-container a{float:left;font-size:0.9em;opacity:0.6;}.konter-bar .account-info-container a.name{font-weight:600;font-size:1.1em;color:#333;}
 .konter-bar .account-info-container a .icon{margin-right:1px;float:left;margin-top:3px;}
 .konter-bar .account-info-container a:hover{opacity:1;}
 .icon-bar{background:#222;position:absolute;top:60px;left:0;width:60px;bottom:0;}.icon-bar a{width:60px;height:54px;display:block;padding:3px 0;border-bottom:1px solid rgba(255, 255, 255, 0.05);position:relative;background:transparent;}.icon-bar a .icon-large{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;right:3px;bottom:10px;opacity:0.5;}
@@ -25,3 +25,7 @@ a{color:#333333;text-decoration:none;}
 .dashboard-plugin-header{padding:5px;font-size:0.9em;color:#222;border-bottom:1px solid #ccc;}
 .dashboard-plugin-body{margin-bottom:10px;padding:10px;}
 .dashboard-plugin-footer{height:10px;font-size:0.6em;position:absolute;bottom:0;left:0;right:0;text-align:right;padding:3px;border-top:1px solid #cfcfcf;}
+.default-content{margin:20px;}
+.user-details-container h1{font-family:'Open Sans Light',sans-serif;font-size:2em;font-weight:100;margin:20px 0;}
+.user-details-container label{display:block;padding-bottom:2px;border-bottom:1px solid #ddd;margin-bottom:2px;font-family:'Open Sans Light',sans-serif;font-weight:100;color:#555;}
+.user-details-container p{margin-bottom:30px;}

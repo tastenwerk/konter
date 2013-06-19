@@ -23,7 +23,7 @@ module.exports = function userRoutes( app, socket ){
 
   app.get( '/users', konter.plugins.auth.check, renderGetUsers );
 
-  app.get( '/users/:id', konter.plugins.auth.check, renderGetUser );
+  app.get( '/users/:id', konter.plugins.auth.check, konter.plugins.users.getById, konter.plugins.groups.getAll, renderGetUser );
 
 }
 
@@ -54,12 +54,12 @@ function renderGetUsers( req, res ){
 function renderGetUser( req, res ){
 
   res.format({
-    html: function(){ res.render( konter.views.get('users/show.jade') ); },
     js: function(){ 
       //
       // TODO: ABSTRACT THIS METHOD WITH SIMPLE CALL !!!
       //
       var contentFilename = konter.views.get('users/show.jade');
+      res.locals.roles = konter.config.roles;
       res.locals.content = jade.compile( fs.readFileSync( contentFilename ), { filename: contentFilename } )( res.locals );
       res.render( konter.views.get('users/show.ejs') ); 
     }

@@ -186,8 +186,8 @@ function createNextGroup( count, groupIdxs, groups, req, res ){
     return createAdmin( groups, req, res );
 
   konter.db.models.Group.create({ name: groupIdxs[count] }, function(err, group){
-    if( err ) konter.log.throwError('Could not create group', groupIdxs[count], 'err:', require('util').inspect(err));
-    if( !group ) konter.log.throwError('Could not create group. Did not get a valid group object when trying to create group', groupIdxs[count]);
+    if( err ) konter.logger.throwError('Could not create group', groupIdxs[count], 'err:', require('util').inspect(err));
+    if( !group ) konter.logger.throwError('Could not create group. Did not get a valid group object when trying to create group', groupIdxs[count]);
     groups.push( group );
     createNextGroup( ++count, groupIdxs, groups, req, res );
   });
@@ -207,11 +207,16 @@ function createAdmin( groups, req, res ){
   konter.db.model('User').create({ name: { nick: req.body.user.name },
                                  email: req.body.user.email || req.body.user.name + '@' + 'konter.site.domain',
                                  password: req.body.user.password,
+                                 roles: konter.config.roles,
                                  groups: groups }, 
                                  function( err, user ){
-                                    if( err ) konter.log.throwError('could not create user admin', require('util').inspect(err));
-                                    if( !user ) konter.log.throwError('could not create user admin');
-                                    req.flash('notice', res.locals.t('Initial setup completed successfully!', {name: req.body.user.name}));
+                                    if( err ){
+                                      konter.logger.error('could not create user admin', require('util').inspect(err));
+                                      req.flash('error', 'setup failed');
+                                    }
+                                    if( !user ) konter.logger.error('could not create user admin');
+                                    else
+                                      req.flash('notice', res.locals.t('Initial setup completed successfully!', {name: req.body.user.name}));
                                     res.redirect('/login');
                                 }
   );

@@ -1,1 +1,11 @@
 $('#content-wrapper').html( <%- JSON.stringify( content ) %> );
+$('#select-user-groups').kendoMultiSelect({ change: setUserGroups }).data('kendoMultiSelect');
+$('#select-user-roles').kendoMultiSelect({ change: setUserRoles }).data("kendoMultiSelect");
+
+function setUserGroups( e ){
+  console.log('setusergroups');
+}
+
+function setUserRoles( e ){
+  console.log('setusergroups');
+}

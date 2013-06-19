@@ -39,6 +39,10 @@ Globalize.addCultureInfo( "de", {
     'Online': 'Online',
     'Register': 'Registrieren',
     'Registered': 'Neuregistrierungen',
-    'Total': 'Gesamt'
+    'Total': 'Gesamt',
+    'Roles': 'Rollen',
+    'Select Groups': 'Gruppen auswählen',
+    'Select Roles': 'Rollen wählen',
+    'Login failed': 'Login fehlgeschlagen'
   }
 });

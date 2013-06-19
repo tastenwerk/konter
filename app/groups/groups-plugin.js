@@ -12,25 +12,23 @@
 
 var konter = require( __dirname+'/../../lib/konter' );
 
-var usersPlugin = module.exports = {};
+var groupsPlugin = module.exports = {};
 
 /**
  * get a user by it's id
  *
- * generates: res.locals.user
+ * generates: res.locals.groups
  * or
  * nothing
  *
  * reports error to konter.log
  */
-usersPlugin.getById = function getUserById( req, res, next ){
+groupsPlugin.getAll = function getUserById( req, res, next ){
   
-  konter.db.models.User.findById( req.params.id ).populate('groups').exec( function( err, user ){
+  konter.db.models.Group.find().exec( function( err, groups ){
     if( err ) konter.log.error('when trying to fetch user from database', err );
-    if( user ){
-      user.groupIds = user.groups.map( function(group){ return group._id.toString() } );
-      req.user = res.locals.user = user;
-    }
+    if( groups )
+      req.groups = res.locals.groups = groups;
     next();
   });
 
