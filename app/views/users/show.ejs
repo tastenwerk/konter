@@ -1,4 +1,5 @@
-$('#content-wrapper').html( <%- JSON.stringify( content ) %> );
+$('#content-wrapper').html( '<div class="user-details user-details-container default-content" data-template="user-details-tmpl" data-bind="source: this"></div>' );
+kendo.bind( $("#content-wrapper .user-details"), JSON.stringify(user) );
 $('#select-user-groups').kendoMultiSelect({ change: setUserGroups }).data('kendoMultiSelect');
 $('#select-user-roles').kendoMultiSelect({ change: setUserRoles }).data("kendoMultiSelect");
 

@@ -12,7 +12,7 @@ html
       .konter-bar
         .logo
         .account-info-container
-          .account-picture
+          .account-picture( style='background-image: url(/users/#{currentUser._id}/avatar.jpg)' )
           .actions.account-actions
             a.xhr-link.name(href='/users/#{currentUser._id}')
               =currentUser.name.full
@@ -31,8 +31,12 @@ html
           span.text=t('Tasks')
 
       input( type='hidden', id='_csrf', value=_csrf )
+      input( type='hidden', id='_env', value=konter.env )
 
       .content-wrapper-arrow-left
       #content-wrapper.content-wrapper
         
         block content
+
+      each tmpl in konter.tmpls
+        |!{tmpl}

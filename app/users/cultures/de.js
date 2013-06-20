@@ -43,6 +43,8 @@ Globalize.addCultureInfo( "de", {
     'Roles': 'Rollen',
     'Select Groups': 'Gruppen auswählen',
     'Select Roles': 'Rollen wählen',
-    'Login failed': 'Login fehlgeschlagen'
+    'Login failed': 'Login fehlgeschlagen',
+    'Edit Avatar': 'Avatar bearbeiten',
+    'Edit Profile': 'Profil bearbeiten'
   }
 });

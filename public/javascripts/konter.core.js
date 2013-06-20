@@ -198,12 +198,22 @@
 
   $(document).ready(function(){
     root.konter._csrf = $('#_csrf').val();
+    root.konter._env = $('#_env').val();
+
+    // prevent user from leaving the site
+    // only in production mode
+    if( konter._env === 'production' )
+      window.onbeforeunload = function(){
+        return 'LEAVE????';
+      };
+
   });
 
 })();
 
-// Avoid "console" errors in browsers that lack a console.
 (function() {
+
+    // Avoid "console" errors in browsers that lack a console.
     var method;
     var noop = function () {};
     var methods = [
@@ -223,4 +233,5 @@
           console[method] = noop;
       }
     }
+
 }());
