@@ -4,7 +4,7 @@
 
 var routes = module.exports = function appRoutes( router ){
 
-  //router.use( 'konter' );
+  router.use( 'konter' );
 
   //router.use( 'konter-web' );
 
