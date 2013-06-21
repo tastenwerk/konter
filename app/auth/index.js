@@ -14,6 +14,13 @@ var konter = require( __dirname+'/../../lib/konter' );
 
 module.exports = function authRoutes( app, socket ){
 
+  app.use( function( req, res, next ){
+    res.locals.authenticated = function authenticated(){
+      return typeof( res.locals.currentUser ) === 'object';
+    }
+    next();
+  });
+
   app.get( '/login', renderGetLogin );
   app.post( '/login', konter.plugins.auth.login, renderPostLogin );
 

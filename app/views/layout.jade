@@ -14,10 +14,10 @@ html
         .account-info-container
           .account-picture( style='background-image: url(/users/#{currentUser._id}/avatar.jpg)' )
           .actions.account-actions
-            a.xhr-link.name(href='/users/#{currentUser._id}')
+            a.cjax-link.name(href='#require=/javascripts/konter.users.js,cb=konter.users.showDetails,#{currentUser._id}', title=t('My Profile'))
               =currentUser.name.full
             .vertical-user-actions-stack
-              a.xhr-link(href='/users/#{currentUser._id}', title=t('My Profile'))
+              a.cjax-link(href='#/users/#{currentUser._id}', title=t('My Profile'))
                 i.icon.icon-edit
               a(href='/logout', title=t('Log off'))
                 i.icon.icon-off
@@ -37,6 +37,3 @@ html
       #content-wrapper.content-wrapper
         
         block content
-
-      each tmpl in konter.tmpls
-        |!{tmpl}

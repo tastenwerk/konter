@@ -18,6 +18,44 @@
 
   var _required = [];
 
+  /**
+   * require a javascript file
+   *
+   *
+   * @param {String} url - the url to require.
+   * @param {Function} [callback] - the callback function (optional)
+   *
+   */
+  function require( url, callback ){
+    if( _required.indexOf( url ) < 0 ){
+      $.getScript( url, callback );
+      _required.push( url );
+    } else
+      if( callback ) callback();
+  }
+
+  /**
+   * require a (knockout) tmpl file
+   * or read ignore, if already in DOM
+   *
+   * @param {String} url - the url to load the template from
+   * @param {Function} callback (optional)
+   *
+   * @api public
+   */
+  function requireTmpl( url, callback ){
+
+    if( _required.indexOf( url ) < 0 )
+      $.get( url, function( tmplScript ){
+        _required.push( url );
+        $('body').append( tmplScript );
+        if( callback ) callback();
+      });
+    else 
+      if( callback ) callback();
+
+  }
+
   // used for global datasources namespace (knockoutjs or kendoui datasources for example)
   var sources = {};
 
@@ -182,7 +220,21 @@
       setupModalActions();
     }
 
-  };
+  }
+
+  var _cache = {};
+
+  function cacheGet( url, callback ){
+    var id = url.split('/');
+    id = id[id.length-1];
+    id = id.split('.')[0];
+    if( id in _cache )
+      return callback( _cache[id] );
+    $.getJSON( url, function( json ){
+      _cache[id] = json;
+      callback( _cache[id] );
+    });
+  }
 
 
   var root = this; // window of browser
@@ -192,7 +244,11 @@
   root.konter.notify = notify;
   root.konter.loaderHtml = loader;
   root.konter.sources = sources;
+  root.konter.require = require;
+  root.konter.requireTmpl = requireTmpl;
   root.konter.logger = {};
+  root.konter.cache = {};
+  root.konter.cache.get = cacheGet;
   root.konter.logger.info = logger;
   root.konter.modal = modal;
 
@@ -207,7 +263,39 @@
         return 'LEAVE????';
       };
 
+    $(window).on('hashchange', checkHashChange)
+
+    if( location.hash.length > 0 )
+      checkHashChange();
+
   });
+
+  function checkHashChange(){
+    var args = location.hash.substring(1,location.hash.length).split(',');
+    var toRequire;
+    var callback;
+    var callbackArgs = [];
+    args.forEach( function( arg ){
+
+      if( arg.indexOf('=') > 0 && arg.split('=')[0] === 'require' )
+        toRequire = arg.split('=')[1];
+
+      else if( arg.indexOf('=') > 0 && arg.split('=')[0] === 'cb' )
+        callback = arg.split('=')[1];
+
+      else
+        callbackArgs.push( arg );
+
+    });
+
+    if( toRequire )
+      require( toRequire, function(){
+        if( callback && callback.match(/^[a-zA-Z.]*$/)) eval(callback).apply( this, callbackArgs );
+      });
+    else
+      if( callback && callback.match(/^[a-zA-Z.]*$/)) eval(callback).apply( this, callbackArgs );
+
+  }
 
 })();
 

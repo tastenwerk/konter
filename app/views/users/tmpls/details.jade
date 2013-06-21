@@ -1,4 +1,4 @@
-script#user-details-tmpl( type='text/x-kendo-template' )
+script#user-details-tmpl( type='text/html' )
   .user-avatar-container
     img( data-bind=' attr: { src: "/users/"+_id+"/avatar.jpg?"+moment().toDate().getTime() } ' )
     a.xhr-json-link.edit-avatar-button(  )
@@ -9,36 +9,32 @@ script#user-details-tmpl( type='text/x-kendo-template' )
       span=t('Edit Profile')
 
   .user-details-content
-    h1( data-bind='text: user.name.full' )
+    h1( data-bind='text: name.full' )
 
     p
       label=t('Email')
-      span( data-bind='text: user.email' )
+      span( data-bind='text: email' )
 
-    |# if( currentUser.isAdmin() ){ #
-    p
-      label(for='select-roles')=t('Roles')
-      select#select-user-roles( multiple=true, data-placeholder=t('Select Roles') )
-        each role in roles
-          option()=role
-    |# } else {
-    p
-      label=t('Roles')
-      |# for( var i=0, role; role=user.roles[i]; i++) { #
-      |#= role
-      |# } #
-      |# } #
-      
-      |#if( currentUser.isAdmin() ) { #
-    p
-      label(for='select-groups')=t('Groups')
-      select#select-user-groups( multiple=true, data-placeholder=t('Select Groups') )
-        each group in groups
-          option()=group.name
-    |# } else { #
+    if currentUser.isAdmin()
+      p
+        label(for='select-roles')=t('Roles')
+        select#select-user-roles( multiple=true, data-placeholder=t('Select Roles') )
+          each role in roles
+            option( data-bind='attr: { selected: roles.indexOf( "#{role}" ) >= 0 }')=role
+    else
+      p
+        label=t('Roles')
+        span( data-bind='foreach: roles' )
+          span( data-bind='text: $data')
+
+    if currentUser.isAdmin()
+      p
+        label(for='select-groups')=t('Groups')
+        select#select-user-groups( multiple=true, data-placeholder=t('Select Groups') )
+          each group in groups
+            option( data-bind='attr: { selected: groupIds }')=group.name
+    else
       p
         label=t('Groups')
-        |# for( var i=0, group; group=user.groups[i]; i++) { #
-        |#= group.name
-        |# } #
-    |# } #
+        span( data-bind='foreach: groups' )
+          span( data-bind='text: name' )

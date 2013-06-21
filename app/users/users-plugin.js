@@ -26,9 +26,8 @@ var usersPlugin = module.exports = {};
 usersPlugin.getById = function getUserById( req, res, next ){
   
   konter.db.models.User.findById( req.params.id ).populate('groups').exec( function( err, user ){
-    if( err ) konter.log.error('when trying to fetch user from database', err );
+    if( err ) konter.logger.error('when trying to fetch user from database', err );
     if( user ){
-      user.groupIds = user.groups.map( function(group){ return group._id.toString() } );
       req.user = res.locals.user = user;
     }
     next();
